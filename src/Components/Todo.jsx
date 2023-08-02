@@ -1,37 +1,44 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
-export default function List() {
-    const [todoList, setTodoList] = useState([])
+export default function Todo({currentTodo, todoList, setTodoList}) {
+    const todo = todoList[currentTodo].todoTasks
     const [newTask, setNewTask] = useState("")
-    
 
     const addNewTask = () => {
         if(newTask){
             const task = {
-                id: todoList.length == 0 ? 1 : todoList[todoList.length - 1].id + 1,
+                id: todo.length == 0 ? 1 : todo[todo.length - 1].id + 1,
                 taskName: newTask,
                 isCompleted: false
             }
-    
-            setTodoList([...todoList, task])
-            console.log(todoList)
-        } 
+           setTodoList(todoList.map((temp) => 
+                temp.todoId === currentTodo
+                ? {...temp, todoTasks: [...temp.todoTasks, task]}
+                : temp
+           ))
+        }
     }
 
     const completeTask = (id) => {
-        setTodoList(todoList.map((task) => {
-            if(task.id === id){
-                return {...task, isCompleted: !task.isCompleted}
-            } else {
-                return task
-            }
-        }))
+        const updatedTodoList = [...todoList]
+        const taskIndex = updatedTodoList[currentTodo].todoTasks.findIndex(task => task.id === id)
+        
+        if(taskIndex !== -1){
+            updatedTodoList[currentTodo].todoTasks[taskIndex].isCompleted = !updatedTodoList[currentTodo].todoTasks[taskIndex].isCompleted
+            setTodoList(updatedTodoList)
+        } 
     }
 
     const removeTask = (id) => {
-        setTodoList(todoList.filter((task) => {
+        const updatedTodoList = [...todoList]
+        const taskIndex = updatedTodoList[currentTodo].todoTasks.findIndex(task => task.id === id)
+
+        const updatedTodo = todoList[currentTodo].todoTasks.filter((task) => {
             return task.id != id
-        }))
+        })
+
+        updatedTodoList[currentTodo].todoTasks = updatedTodo
+        setTodoList(updatedTodoList)
     }
 
     return(
@@ -43,7 +50,7 @@ export default function List() {
                 </div>
                 <div className="tasks_container">
                     <ul>
-                        {todoList.map((task) => {
+                        {todo.map((task) => {
                             return(
                                 <li key={task.id} className={`task ${task.isCompleted ? "completed" : ""}`}>
                                     <div className="">

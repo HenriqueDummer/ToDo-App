@@ -173,6 +173,8 @@
   background-color: aliceblue;
   list-style: none;
   margin-bottom: 20px;
+  border: 2px solid #ffffff;
+  transition: 0.2s ease all;
 }
   
  .tasks_container .task div{
@@ -217,7 +219,7 @@
 }
 
 .tasks_container .completed{
-  border: 2px solid rgb(6, 165, 40);
+  border: 2px solid #743acc;
 }
 
 
