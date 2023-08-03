@@ -17,6 +17,7 @@ export default function Todo({currentTodo, todoList, setTodoList}) {
                 : temp
            ))
         }
+        setNewTask("")
     }
 
     const completeTask = (id) => {
@@ -44,9 +45,10 @@ export default function Todo({currentTodo, todoList, setTodoList}) {
     return(
         <>
             <div className="list_container">
+                <h1>{todoList[currentTodo].todoName}</h1>
                 <div className="add_task">
-                    <input type="text" placeholder="Add a new task to your list" onChange={() => setNewTask(event.target.value)}/>
-                    <button onClick={() => addNewTask()}>Add Task</button>
+                    <input type="text" placeholder="Add a new task to your list" value={newTask} onChange={() => setNewTask(event.target.value)}/>
+                    <button onClick={() => addNewTask()}> <span>Add Task</span></button>
                 </div>
                 <div className="tasks_container">
                     <ul>
@@ -58,7 +60,7 @@ export default function Todo({currentTodo, todoList, setTodoList}) {
                                         <h2>{task.taskName}</h2> 
                                     </div>
                                     <button onClick={() => removeTask(task.id)}>
-                                        <i class='bx bxs-trash-alt' ></i>
+                                        <i className='bx bxs-trash-alt' ></i>
                                     </button> 
                                  </li>
                             )

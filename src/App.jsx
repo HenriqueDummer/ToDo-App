@@ -23,31 +23,27 @@ function App() {
     }
   ])
 
-  const[currentTodo, setCurrentTodo] = useState(2)
+  const[currentTodoId, setCurrentTodoId] = useState(0)
+
+  const todo = todoList.find(
+    ({todoId}) => todoId === currentTodoId
+  )
 
   return (
     <>
       <Navbar 
-        todo = {todoList}
-        currentTodo = {currentTodo}
-        setCurrentTodo = {setCurrentTodo}
+        todoList = {todoList}
+        currentTodo = {currentTodoId}
+        setCurrentTodo = {setCurrentTodoId}
       />
-      {
-        todoList.map((todo) => {
-          if(todo.todoId === currentTodo){
-            return(
-              <Todo 
-                currentTodo = {currentTodo}
-                todoList = {todoList}
-                setTodoList = {setTodoList}
-                id = {todoList.todoId}
-              />
-            )
-          }})
-      }
-      {console.log(currentTodo)}
-      {console.log(todoList[currentTodo])}
-      
+      {todo !== undefined && (
+        <Todo 
+          currentTodo = {currentTodoId}
+          todoList = {todoList}
+          setTodoList = {setTodoList}
+          id = {todoList.todoId}
+        />
+      )}     
     </>
   )
 }

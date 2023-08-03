@@ -13,12 +13,14 @@
   height: 100vh;
   display: flex;
   background-color: #bdfffd;
+  background-color: #FAF4D3;
 }
 
 .navbar{
   width: 600px;
   height: 100%;
   background-color: #9b9ece;
+  background-color: #004643;
   border-top-right-radius: 30px;
   border-bottom-right-radius: 30px;
   padding: 30px 20px;
@@ -28,9 +30,10 @@
 .profile{
   display: flex;
   align-items: center;
-  justify-content: center;
+
   color: rgb(32, 32, 32);
   position: relative;
+  color: #FAF4D3;
 }
 
 .profile::after{
@@ -40,8 +43,10 @@
   height: 4px;
   bottom: -20px;
   border-radius: 2px;
+  right: 50%;
+  transform: translate(50%,-50%);
   background-color: #6622CC;
-
+  background-color: #0C1618;
 }
 
 .profile p{
@@ -64,12 +69,14 @@
 
 .controls{
   height: 100%;
-  margin-top: 100px;
+  margin-top: 130px;
 }
 
 .controls h2{
   font-weight: 500;
   font-size: 27px;
+  color: #FAF4D3;
+  margin-left: 15px;
 }
 
 
@@ -88,21 +95,7 @@
   border: none;
   border-radius: 8px;
   transition: 0.1s ease all;
-}
-
-.selected{
-  position: relative;
-}
-
-.selected::after{
-  content: "";
-  position: absolute;
-  width: 150px;
-  height: 2px;
-  left: 20px;
-  bottom: 0px;
-  border-radius: 6px;
-  background-color: #743acc;
+  color: #FAF4D3;
 }
 
 .task_list:hover{
@@ -113,20 +106,63 @@
 .task_list h3{
   font-weight: 400;
   margin-left: 25px;
+  pointer-events: none;
+  position: relative;
+  font-size: 18px;
+}
+
+.task_list h3::after{
+  content: "";
+  position: absolute;
+  width: 0;
+  height: 4px;
+  left: 0;
+  bottom: -7px;
+  border-radius: 6px;
+  background-color: #0C1618;
+  transition: 0.3s ease-out all;
+}
+
+.task_list.selected{
+  font-size: 15px;
+  background-color: rgba(0,0,0, 0.2);
+}
+
+.task_list::hover h3::after{
+  width: 150%;
+}
+
+.selected h3::after{
+  width: 150%;
 }
 
 .task_list i {
-  font-size: 15px;
+  font-size: 14px;
   margin-left: 30px;
+  pointer-events: none;
+  color: #0C1618;
+  transition: 0.1s ease-in-out all;
 }
+
+.selected i{
+  font-size: 17px;
+} 
 
 .list_container{
   width: 100%;
   height: 100vh;
   display: flex;
   align-items: center;
-  margin-top: 130px;
+  margin-top: 180px;
   flex-direction: column;
+  position: relative;
+}
+
+.list_container h1{
+  position: absolute;
+  left: 80px;
+  top: -100px;
+  color: #0C1618;
 }
 
 .add_task{
@@ -145,13 +181,22 @@
     border-top-left-radius: 14px;
     border-bottom-left-radius: 14px;
     font-size: 16px;
+    background-color: rgba(0,0,0, 0.1);
 }
 
 .add_task button{
   width: 100px;
   border: none;
   background-color: #743acc;
+  background-color: #0C1618;
   color: aliceblue;
+}
+.add_task button span{
+  pointer-events: none;
+}
+
+.add_task button:hover{
+  cursor: pointer;
 }
 
 .tasks_container{
@@ -171,6 +216,7 @@
   justify-content: space-between;
   padding-inline: 20px;
   background-color: aliceblue;
+  background-color: rgba(0,0,0, 0.2);
   list-style: none;
   margin-bottom: 20px;
   border: 2px solid #ffffff;
@@ -186,6 +232,7 @@
   font-size: 16px;
   font-weight: 400;
   margin-left: 15px;
+  pointer-events: none;
 }
 
 .tasks_container .task div input{
@@ -219,7 +266,7 @@
 }
 
 .tasks_container .completed{
-  border: 2px solid #743acc;
+  border: 2px solid #01857e;
 }
 
 

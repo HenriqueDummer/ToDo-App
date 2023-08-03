@@ -1,4 +1,4 @@
-export default function Navbar({changeTodo, setCurrentTodo, currentTodo}){
+export default function Navbar({todoList, setCurrentTodo, currentTodo}){
     return(
         <>
             <div className="navbar">
@@ -14,21 +14,21 @@ export default function Navbar({changeTodo, setCurrentTodo, currentTodo}){
                 <div className="controls">
                     <h2>Your tasks</h2>
                     <div className="tasks_list_container">
-                        <button onClick={() => setCurrentTodo(event.target.id)} id="0" className="task_list selected">
-                            <i class='bx bxs-circle'></i>
-                            <h3>Personal</h3>
-                        </button>
-                        <button onClick={() => setCurrentTodo(event.target.id)} id="1" className="task_list">
-                            <i className='bx bxs-circle'></i>
-                            <h3>Work</h3>
-                        </button>
-                        <button onClick={() => setCurrentTodo(event.target.id)} id="2" className="task_list">
-                            <i className='bx bxs-circle'></i>
-                            <h3>College</h3>
-                        </button>
+                        {
+                            todoList.map((todo) => {
+                                return(
+                                <button 
+                                onClick={() => setCurrentTodo(Number(event.target.id))} 
+                                id={todo.todoId} className={`task_list ${todo.todoId === currentTodo ? "selected" : ""}`}>
+                                    <i className='bx bxs-circle'></i>
+                                    <h3 >{todo.todoName}</h3>
+                                </button>)
+                            })
+                        }
                     </div>
                 </div>
             </div>
         </>
     );
 }
+
