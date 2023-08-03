@@ -26,6 +26,7 @@ export default function Todo({currentTodo, todoList, setTodoList}) {
         
         if(taskIndex !== -1){
             updatedTodoList[currentTodo].todoTasks[taskIndex].isCompleted = !updatedTodoList[currentTodo].todoTasks[taskIndex].isCompleted
+            console.log(todoList)
             setTodoList(updatedTodoList)
         } 
     }
@@ -56,10 +57,10 @@ export default function Todo({currentTodo, todoList, setTodoList}) {
                             return(
                                 <li key={task.id} className={`task ${task.isCompleted ? "completed" : ""}`}>
                                     <div className="">
-                                        <input type="checkbox" onClick={() => completeTask(task.id)}></input>
+                                        <button onClick={() => completeTask(task.id)} className="complete_btn"><i class='bx bx-check'></i></button>
                                         <h2>{task.taskName}</h2> 
                                     </div>
-                                    <button onClick={() => removeTask(task.id)}>
+                                    <button onClick={() => removeTask(task.id)} className="delete_btn">
                                         <i className='bx bxs-trash-alt' ></i>
                                     </button> 
                                  </li>

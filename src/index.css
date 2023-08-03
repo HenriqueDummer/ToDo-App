@@ -235,14 +235,12 @@
   pointer-events: none;
 }
 
-.tasks_container .task div input{
-  width: 20px;
-  height: 20px;
+.task .complete_btn:hover{
+  cursor: pointer;
 }
 
-.tasks_container .task button{
+.task .complete_btn{
   border: none;
-  background-color: transparent;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -252,16 +250,40 @@
   background-color: rgba(0,0,0, 0.2);
 }
 
-.tasks_container .task button i{
+.task .complete_btn i{
+  font-size: 22px;
+  opacity: 0;
+}
+
+.completed .complete_btn {
+  background-color: #015e59;
+}
+
+.completed .complete_btn i{
+  opacity: 1;
+}
+
+.task .delete_btn{
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 5px;
+  background-color: rgba(0,0,0, 0.2);
+}
+
+.task .delete_btn i{
   font-size: 20px;
   transition: 0.1s ease-in all;
 }
 
-.tasks_container .task button:hover {
+.task .delete_btn:hover {
   cursor: pointer;
 }
 
-.tasks_container .task button:hover i{
+.task .delete_btn:hover i{
   color: #d42822;
 }
 
