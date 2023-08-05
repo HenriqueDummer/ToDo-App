@@ -25,6 +25,7 @@
   border-bottom-right-radius: 30px;
   padding: 30px 20px;
   color: rgb(32, 32, 32);
+  min-width: 440px;
 }
 
 .profile{
@@ -102,7 +103,6 @@
 .task_list .todo_name{
   display: flex;
   align-items: center;
-  pointer-events: none;
 }
 
 .task_list:hover{
@@ -114,11 +114,40 @@
   background-color: rgba(0,0,0, 0.2);
 }
 
-.todo_name h3{
+.todo_name input{
+  width: 60%;
+  border-radius: 4px;
+  padding-left: 10px;
   font-weight: 400;
+  color: #FAF4D3;
   margin-left: 25px;
+  border: 2px solid #0C1618;;;
   position: relative;
   font-size: 17px;
+  background-color: transparent;
+}
+
+.todo_name button{
+  margin-left: 10px;
+  background-color: transparent;
+  border: 2px solid #0C1618;
+  border-radius: 4px;
+  padding: 2px 5px;
+  color: #FAF4D3;
+  transition: 0.2s ease all;
+}
+
+.todo_name button:hover{
+  cursor: pointer;
+  color: #0C1618;
+  background-color: #FAF4D3;
+  border: 2px solid #FAF4D3;
+}
+
+.todo_name h3 {
+  font-size: 17px;
+  font-weight: 400;
+  margin-left: 25px
 }
 
 .selected .todo_name h3{
@@ -137,7 +166,9 @@
   transition: 0.3s ease-out all;
 }
 
-.selected h3::after{
+
+
+.selected input::after{
   width: 150%;
 }
 
