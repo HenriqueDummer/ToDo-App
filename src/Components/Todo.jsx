@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react";
 
 export default function Todo({currentTodo, todoList, setTodoList}) {
-    const todo = todoList[currentTodo].todoTasks
+
+    const todo = todoList.find(todo => todo.todoId === currentTodo).todoTasks
+    const todoIndex = todoList.findIndex(todo => todo.todoId === currentTodo)
     const [newTask, setNewTask] = useState("")
 
     const addNewTask = () => {
@@ -22,10 +24,10 @@ export default function Todo({currentTodo, todoList, setTodoList}) {
 
     const completeTask = (id) => {
         const updatedTodoList = [...todoList]
-        const taskIndex = updatedTodoList[currentTodo].todoTasks.findIndex(task => task.id === id)
+        const taskIndex = updatedTodoList[todoIndex].todoTasks.findIndex(task => task.id === id)
         
         if(taskIndex !== -1){
-            updatedTodoList[currentTodo].todoTasks[taskIndex].isCompleted = !updatedTodoList[currentTodo].todoTasks[taskIndex].isCompleted
+            updatedTodoList[todoIndex].todoTasks[taskIndex].isCompleted = !updatedTodoList[todoIndex].todoTasks[taskIndex].isCompleted
             console.log(todoList)
             setTodoList(updatedTodoList)
         } 
@@ -46,7 +48,7 @@ export default function Todo({currentTodo, todoList, setTodoList}) {
     return(
         <>
             <div className="list_container">
-                <h1>{todoList[currentTodo].todoName}</h1>
+                <h1>{todoList[todoIndex].todoName}</h1>
                 <div className="add_task">
                     <input type="text" placeholder="Add a new task to your list" value={newTask} onChange={() => setNewTask(event.target.value)}/>
                     <button onClick={() => addNewTask()}> <span>Add Task</span></button>

@@ -91,6 +91,7 @@
   align-items: center;
   margin-top: 5px;
   background-color: transparent;
+  justify-content: space-between;
   height: 40px;
   border: none;
   border-radius: 8px;
@@ -98,20 +99,33 @@
   color: #FAF4D3;
 }
 
+.task_list .todo_name{
+  display: flex;
+  align-items: center;
+  pointer-events: none;
+}
+
 .task_list:hover{
   background-color: rgba(0,0,0, 0.1);
   cursor: pointer;
 }
 
-.task_list h3{
+.task_list.selected{
+  background-color: rgba(0,0,0, 0.2);
+}
+
+.todo_name h3{
   font-weight: 400;
   margin-left: 25px;
-  pointer-events: none;
   position: relative;
+  font-size: 17px;
+}
+
+.selected .todo_name h3{
   font-size: 18px;
 }
 
-.task_list h3::after{
+.todo_name h3::after{
   content: "";
   position: absolute;
   width: 0;
@@ -123,20 +137,11 @@
   transition: 0.3s ease-out all;
 }
 
-.task_list.selected{
-  font-size: 15px;
-  background-color: rgba(0,0,0, 0.2);
-}
-
-.task_list::hover h3::after{
-  width: 150%;
-}
-
 .selected h3::after{
   width: 150%;
 }
 
-.task_list i {
+.task_list .todo_name i {
   font-size: 14px;
   margin-left: 30px;
   pointer-events: none;
@@ -144,9 +149,81 @@
   transition: 0.1s ease-in-out all;
 }
 
-.selected i{
+.selected .todo_name i{
   font-size: 17px;
 } 
+
+
+.dropdown_btn{
+  position: relative;
+  width: 30px;
+  height: 30px;
+  margin-right: 10px;
+  border: none;
+  background-color: transparent;
+  border-radius: 50%;
+  display: none;
+  transition: 0.2s ease all;
+}
+
+.selected .dropdown_btn{
+  display: inline;
+}
+
+.dropdown_btn:hover{
+  cursor: pointer;
+  background-color: rgba(0,0,0, 0.2);
+}
+
+.dropdown_btn i{
+  font-size: 27px;
+  color: #FAF4D3;
+}
+
+.dropdown_menu_container{
+  position: relative;
+}
+
+.dropdown_menu{
+  position: absolute;
+  left: 80px;
+  width: 180px;
+  display: none;
+  justify-content: space-around;
+  background-color: #004643;
+  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
+  padding: 0px 10px;
+}
+
+.dropdown_menu button{
+  background-color: transparent;
+  width: 100%;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: #FAF4D3;
+  font-size: 13px;
+  padding: 5px;
+  border-radius: 8px;
+  border: none;
+  margin: 10px 0;
+  z-index: 999;
+}
+
+.dropdown_menu button i{
+  font-size: 18px;
+}
+
+.drop_active { 
+  display: block;
+  z-index: 9;
+}
+
+.drop_active button:hover{
+  cursor: pointer;
+  background-color: rgba(0,0,0, 0.2);
+}
 
 .list_container{
   width: 100%;
@@ -215,11 +292,10 @@
   align-items: center;
   justify-content: space-between;
   padding-inline: 20px;
-  background-color: aliceblue;
   background-color: rgba(0,0,0, 0.2);
   list-style: none;
   margin-bottom: 20px;
-  border: 2px solid #ffffff;
+  border: 3px solid transparent;
   transition: 0.2s ease all;
 }
   
@@ -263,7 +339,7 @@
   opacity: 1;
 }
 
-.task .delete_btn{
+.delete_btn{
   border: none;
   display: flex;
   align-items: center;
@@ -272,23 +348,25 @@
   height: 30px;
   border-radius: 5px;
   background-color: rgba(0,0,0, 0.2);
+  transition: 0.1s ease-in all;
 }
 
-.task .delete_btn i{
+.delete_btn i{
   font-size: 20px;
   transition: 0.1s ease-in all;
 }
 
-.task .delete_btn:hover {
+.delete_btn:hover {
   cursor: pointer;
 }
 
-.task .delete_btn:hover i{
-  color: #d42822;
+.delete_btn:hover{
+  background-color: #ff0800;
+  box-shadow: 0px 0px 10px #ff0800;
 }
 
 .tasks_container .completed{
-  border: 2px solid #01857e;
+  border: 3px solid #01857e;
 }
 
 

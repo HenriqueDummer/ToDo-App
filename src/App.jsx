@@ -29,12 +29,15 @@ function App() {
     ({todoId}) => todoId === currentTodoId
   )
 
+
+
   return (
     <>
       <Navbar 
         todoList = {todoList}
         currentTodo = {currentTodoId}
         setCurrentTodo = {setCurrentTodoId}
+        setTodoList = {setTodoList}
       />
       {todo !== undefined && (
         <Todo 
