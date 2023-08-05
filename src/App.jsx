@@ -29,8 +29,6 @@ function App() {
     ({todoId}) => todoId === currentTodoId
   )
 
-
-
   return (
     <>
       <Navbar 

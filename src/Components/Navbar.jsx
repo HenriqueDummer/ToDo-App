@@ -1,5 +1,6 @@
 import { useState, useRef } from "react";
 
+
 export default function Navbar({todoList, setCurrentTodo, currentTodo, setTodoList}){
     
     const [drop_active, setDropActive] = useState(false)
@@ -15,10 +16,7 @@ export default function Navbar({todoList, setCurrentTodo, currentTodo, setTodoLi
         
         setTodoList(updatedTodoList)
 
-        setCurrentTodo(updatedTodoList[0].todoId)
-
-        //====================================================
-        
+        setCurrentTodo(updatedTodoList[0].todoId)      
     }
 
     const changeTodo = (id) => {
@@ -51,6 +49,16 @@ export default function Navbar({todoList, setCurrentTodo, currentTodo, setTodoLi
         setIsChangingName(false)
     }
     
+    const addNewTodo = () => {
+        const newTodo = {
+            todoId: todoList[todoList.length - 1].todoId + 1,
+            todoName: "New todo",
+            todoTasks: []
+        }
+
+        setTodoList([...todoList, newTodo])
+    }
+    console.log(todoList)
 
     return(
         <>
@@ -77,13 +85,13 @@ export default function Navbar({todoList, setCurrentTodo, currentTodo, setTodoLi
                                         <i className='bx bxs-circle'></i>
                                         {isChangingName && todo.todoId === currentTodo ? (
                                             <>
-                                                <input ref={nameInputRef}  id="todoName" type="text" value={nameChange} onChange={() => setNameChange(event.target.value)} />
+                                                <input required ref={nameInputRef}  id="todoName" type="text" value={nameChange} onChange={() => setNameChange(event.target.value)} />
                                                 <button onClick={() => saveNameChange(todo.todoId)}>Save</button>
                                             </>
                                             ) : (
-                                            <>
+                                            <div className="name_container">
                                                 <h3>{todo.todoName}</h3>
-                                            </>
+                                            </div>
                                             )
                                         }
                                         
@@ -107,6 +115,12 @@ export default function Navbar({todoList, setCurrentTodo, currentTodo, setTodoLi
                             })
                         }
                     </div>
+                    {
+                        todoList.length < 10 &&
+                        <div className="add_todo">
+                            <button onClick={() => addNewTodo()} className="add_todo_btn"><i class='bx bx-plus'></i></button>
+                        </div>
+                    }
                 </div>
             </div>
         </>
