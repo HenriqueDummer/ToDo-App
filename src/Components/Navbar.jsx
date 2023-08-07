@@ -6,6 +6,7 @@ export default function Navbar({todoList, setCurrentTodo, currentTodo, setTodoLi
     const [drop_active, setDropActive] = useState(false)
     const [isChangingName, setIsChangingName] = useState(false)
     const [nameChange, setNameChange] = useState()
+    const [navActive, setNavActive] = useState(true)
     
     const nameInputRef = useRef(null)
 
@@ -58,11 +59,17 @@ export default function Navbar({todoList, setCurrentTodo, currentTodo, setTodoLi
 
         setTodoList([...todoList, newTodo])
     }
-    console.log(todoList)
+    console.log(navActive)
 
     return(
         <>
-            <div className="navbar">
+            
+            <div className={`navbar ${navActive ? "" : "hidden"}`}>
+                {   navActive ?
+                    <button onClick={() => setNavActive(false)}  className="nav_btn"><i class='bx bxs-x-square'></i></button>
+                    :
+                    <button onClick={() => setNavActive(true)} className="nav_btn"><i class='bx bx-menu'></i></button>
+                }
                 <div className="profile">
                     <div className="profile-img">
                         <img src="https://img.freepik.com/free-icon/user_318-159711.jpg" alt="" />

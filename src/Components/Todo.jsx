@@ -50,7 +50,7 @@ export default function Todo({currentTodo, todoList, setTodoList}) {
             <div className="todos_container">
                 <h1>{todoList[todoIndex].todoName}</h1>
                 <div className="add_task">
-                    <input type="text" placeholder="Add a new task to your list" value={newTask} onChange={() => setNewTask(event.target.value)}/>
+                    <input type="text" placeholder="Add a new task" value={newTask} onChange={() => setNewTask(event.target.value)}/>
                     <button onClick={() => addNewTask()}> <span>Add Task</span></button>
                 </div>
                 <div className="tasks_container">
