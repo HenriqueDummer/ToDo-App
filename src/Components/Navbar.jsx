@@ -64,23 +64,23 @@ export default function Navbar({todoList, setCurrentTodo, currentTodo, setTodoLi
         <>
             <div className="navbar">
                 <div className="profile">
-                    <div className="profile_img">
+                    <div className="profile-img">
                         <img src="https://img.freepik.com/free-icon/user_318-159711.jpg" alt="" />
                     </div>
-                    <div className="profile_infos">
+                    <div className="profile-infos">
                         <p>Hello there</p>
                         <h3>Henrique Dummer</h3>
                     </div>
                 </div>
                 <div className="controls">
                     <h2>Your tasks</h2>
-                    <div className="tasks_list_container">
+                    <div className="list_container">
                         {
                             todoList.map((todo) => {
                                 return(
                                 <button 
                                 onClick={() => changeTodo(todo.todoId)} 
-                                id={todo.todoId} className={`task_list ${todo.todoId === currentTodo ? "selected" : ""}`} onSubmit={() => saveNameChange(todo.todoId)}>
+                                id={todo.todoId} className={`list_container_todo ${todo.todoId === currentTodo ? "active" : ""}`} onSubmit={() => saveNameChange(todo.todoId)}>
                                     <div className="todo_name">
                                         <i className='bx bxs-circle'></i>
                                         {isChangingName && todo.todoId === currentTodo ? (
@@ -98,7 +98,7 @@ export default function Navbar({todoList, setCurrentTodo, currentTodo, setTodoLi
                                     </div>
                                     <button id={todo.todoId} className="dropdown_btn" onClick={handleOpen}>            
                                         <i class='bx bx-dots-vertical-rounded bx-rotate-90' ></i>
-                                        <div className="drop_down_menu">
+                                        <div className="dropdown_menu_container">
                                             <div className={`dropdown_menu ${drop_active ? `drop_active` : ``}`}>
                                                 <button className="" onClick={() => removeTodo(todo.todoId)}>
                                                     <p>Delete</p>

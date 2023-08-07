@@ -19,7 +19,6 @@
 
 .navbar{
   width: 600px;
-  background-color: #9b9ece;
   background-color: #004643;
   border-top-right-radius: 30px;
   border-bottom-right-radius: 30px;
@@ -31,7 +30,6 @@
 .profile{
   display: flex;
   align-items: center;
-
   color: rgb(32, 32, 32);
   position: relative;
   color: #FAF4D3;
@@ -46,7 +44,6 @@
   border-radius: 2px;
   right: 50%;
   transform: translate(50%,-50%);
-  background-color: #6622CC;
   background-color: #0C1618;
 }
 
@@ -180,7 +177,7 @@
 
 
 .selected .name_container h3::after{
-  width: 12 0%;
+  width: 120%;
 }
 
 .task_list .todo_name i {
