@@ -19,4 +19,5 @@ https://to-do-app-one-smoky.vercel.app
   <li>CSS</li>
   <li>JavaScript</li>
   <li>React</li>
+  <li>Sass</li>
 </ul>
