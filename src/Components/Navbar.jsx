@@ -1,5 +1,5 @@
 import { useState, useRef } from "react";
-
+import { auth  } from '../Config/Firebase'
 
 export default function Navbar({todoList, setCurrentTodo, currentTodo, setTodoList}){
     
@@ -9,6 +9,12 @@ export default function Navbar({todoList, setCurrentTodo, currentTodo, setTodoLi
     const [navActive, setNavActive] = useState(true)
     
     const nameInputRef = useRef(null)
+
+    const openNav = () => {
+        setNavActive(!navActive)
+        setDropActive(false)
+        setIsChangingName(false)
+    }
 
     const removeTodo = (id) => {
         const updatedTodoList = todoList.filter((todo) => {
@@ -59,14 +65,13 @@ export default function Navbar({todoList, setCurrentTodo, currentTodo, setTodoLi
 
         setTodoList([...todoList, newTodo])
     }
-    console.log(navActive)
 
     return(
         <>
             
             <div className={`navbar ${navActive ? "" : "hidden"}`}>
                 {   navActive ?
-                    <button onClick={() => setNavActive(false)}  className="nav_btn"><i class='bx bxs-x-square'></i></button>
+                    <button onClick={() => openNav()}  className="nav_btn"><i class='bx bxs-x-square'></i></button>
                     :
                     <button onClick={() => setNavActive(true)} className="nav_btn"><i class='bx bx-menu'></i></button>
                 }
@@ -76,7 +81,7 @@ export default function Navbar({todoList, setCurrentTodo, currentTodo, setTodoLi
                     </div>
                     <div className="profile-infos">
                         <p>Hello there</p>
-                        <h3>Henrique Dummer</h3>
+                        <h3>{auth?.currentUser?.displayName}</h3>
                     </div>
                 </div>
                 <div className="controls">
@@ -87,7 +92,7 @@ export default function Navbar({todoList, setCurrentTodo, currentTodo, setTodoLi
                                 return(
                                 <button 
                                 onClick={() => changeTodo(todo.todoId)} 
-                                id={todo.todoId} className={`list_container_todo ${todo.todoId === currentTodo ? "active" : ""}`} onSubmit={() => saveNameChange(todo.todoId)}>
+                                 className={`list_container_todo ${todo.todoId === currentTodo ? "active" : ""}`} onSubmit={() => saveNameChange(todo.todoId)}>
                                     <div className="todo_name">
                                         <i className='bx bxs-circle'></i>
                                         {isChangingName && todo.todoId === currentTodo ? (
@@ -103,8 +108,8 @@ export default function Navbar({todoList, setCurrentTodo, currentTodo, setTodoLi
                                         }
                                         
                                     </div>
-                                    <button id={todo.todoId} className="dropdown_btn" onClick={handleOpen}>            
-                                        <i class='bx bx-dots-vertical-rounded bx-rotate-90' ></i>
+                                    <button className="dropdown_btn" onClick={handleOpen}>            
+                                        <i className='bx bx-dots-vertical-rounded bx-rotate-90' ></i>
                                         <div className="dropdown_menu_container">
                                             <div className={`dropdown_menu ${drop_active ? `drop_active` : ``}`}>
                                                 <button className="" onClick={() => removeTodo(todo.todoId)}>
