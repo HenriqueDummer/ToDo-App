@@ -38,7 +38,7 @@ function App() {
       />
       {todo !== undefined && (
         <Todo 
-          currentTodo = {currentTodoId}
+          currentTodoId = {currentTodoId}
           todoList = {todoList}
           setTodoList = {setTodoList}
           id = {todoList.todoId}
