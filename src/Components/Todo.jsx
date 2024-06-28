@@ -16,7 +16,7 @@ export default function Todo({ currentTodoId, todoList, setTodoList }) {
     const taskName = taskRef.current.value;
     if (taskName.trim() !== "") {
       const newTask = {
-        id: currentTodoTasks.length == 0 ? 1 : todo[todo.length - 1].id + 1,
+        id: currentTodoTasks.length == 0 ? 1 : currentTodoTasks[currentTodoTasks.length - 1].id + 1,
         taskName,
         isCompleted: false,
       };
@@ -26,7 +26,6 @@ export default function Todo({ currentTodoId, todoList, setTodoList }) {
       setTodoList(newTodoList);
       taskRef.current.value = "";
     }
-    setNewTask("");
   };
 
   const completeTask = (id) => {
