@@ -1,69 +1,15 @@
-import React, { useRef } from "react";
-import { auth, googleProvider } from "../config/firebase";
-import {
-  createUserWithEmailAndPassword,
-  signInWithPopup,
-  signOut,
-  signInWithEmailAndPassword,
-  onAuthStateChanged
-} from "firebase/auth";
+import React, { useRef, useState } from "react";
+import { signUp, logIn, signInWithGoogle } from "../config/logInFunctions";
 
 const Login = ({ setUserIsAuthenticated }) => {
+  const [isLogin, setIsLogin] = useState(true);
   const emailRef = useRef();
   const passwordRef = useRef();
-
-  onAuthStateChanged(auth, (user) => {
-    if (user) {
-      setUserIsAuthenticated(true);
-    } else {
-      setUserIsAuthenticated(false);
-    }
-  }
-  )
-
-  async function signIn(e) {
-    e.preventDefault();
-
-    try {
-      await createUserWithEmailAndPassword(
-        auth,
-        emailRef.current.value,
-        passwordRef.current.value
-      );
-    } catch (err) {
-      console.log(err);
-    }
-
-    setUserIsAuthenticated(true);
-  }
-
-  async function logIn() {
-    try {
-      await signInWithEmailAndPassword(
-        auth,
-        emailRef.current.value,
-        passwordRef.current.value
-      );
-
-      setUserIsAuthenticated(true)
-    } catch (err) {
-      console.error(err);
-    }
-  }
-
-  async function signInWithGoogle() {
-    try {
-      await signInWithPopup(auth, googleProvider);
-    } catch (err) {
-      console.error(err);
-    }
-
-    setUserIsAuthenticated(true);
-  }
+  const confirmPasswordRef = useRef();
 
   return (
     <div className="login_screen">
-      <h1>Login into your account!</h1>
+      <h1>{isLogin ? "Log in into your account!" : "Create a new account!"}</h1>
       <form className="login_container">
         <p>
           <label htmlFor="email">Email</label>
@@ -79,14 +25,73 @@ const Login = ({ setUserIsAuthenticated }) => {
             required
           />
         </p>
+        {!isLogin && (
+          <p>
+            <label htmlFor="password">Confirm password</label>
+            <input
+              ref={confirmPasswordRef}
+              type="password"
+              name="password"
+              id="password"
+              required
+            />
+          </p>
+        )}
 
-          <p>Doesn't have an account? <a href="#">Sign Up</a></p>
+        {isLogin ? (
+          <p className="alternate_mode">
+            Doesn't have an account?
+            <button
+              type="button"
+              onClick={() => setIsLogin(false)}
+              className="alt_btn"
+            >
+              Sign up
+            </button>
+          </p>
+        ) : (
+          <p className="alternate_mode">
+            Already have an account?
+            <button
+              type="button"
+              onClick={() => setIsLogin(true)}
+              className="alt_btn"
+            >
+              Log in
+            </button>
+          </p>
+        )}
 
-          <button type="button" className="login_btn" onClick={logIn}>Log In</button>
-          <button type="button" className="login_btn" onClick={signInWithGoogle}>Log in with Google</button>
+        {isLogin ? (
+          <button
+            className="main_btn"
+            type="button"
+            onClick={() =>
+              logIn(emailRef.current.value, passwordRef.current.value)
+            }
+          >
+            Log in
+          </button>
+        ) : (
+          <button
+            className="main_btn"
+            type="button"
+            onClick={() =>
+              signUp(emailRef.current.value, passwordRef.current.value)
+            }
+          >
+            Sign up
+          </button>
+        )}
+
+        <button
+          type="button"
+          className="login_google main_btn"
+          onClick={signInWithGoogle}
+        >
+          Sign in with Google
+        </button>
       </form>
-      
-      <p>{auth?.currentUser?.email}</p>
     </div>
   );
 };

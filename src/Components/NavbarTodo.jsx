@@ -4,7 +4,6 @@ import { useState, useRef } from "react";
 const NavbarTodo = ({ todoList, setTodoList, setCurrentTodoId, todo, currentTodoId }) => {
   const [drop_active, setDropActive] = useState(false);
   const [isChangingName, setIsChangingName] = useState(false);
-  console.log()
 
   const nameInputRef = useRef(null);
 
@@ -66,7 +65,7 @@ const NavbarTodo = ({ todoList, setTodoList, setCurrentTodoId, todo, currentTodo
         )}
       </div>
       <button id={todo.todoId} className="dropdown_btn" onClick={handleOpenConfigs}>
-        <i class="bx bx-dots-vertical-rounded bx-rotate-90"></i>
+        <i className="bx bx-dots-vertical-rounded bx-rotate-90"></i>
         <div className="dropdown_menu_container">
           <div className={`dropdown_menu ${drop_active ? `drop_active` : ``}`}>
             <button className="" onClick={() => removeTodo(todo.todoId)}>
@@ -75,7 +74,7 @@ const NavbarTodo = ({ todoList, setTodoList, setCurrentTodoId, todo, currentTodo
             </button>
             <button onClick={startChangingName} className="">
               <p>Change Name</p>
-              <i class="bx bxs-edit"></i>
+              <i className="bx bxs-edit"></i>
             </button>
           </div>
         </div>

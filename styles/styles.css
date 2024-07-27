@@ -29,6 +29,7 @@
   border-bottom-right-radius: 20px;
   color: #0C1618;
   transition: 0.4s ease-out all;
+  position: relative;
 }
 @media (max-width: 1000px) {
   #root .navbar {
@@ -314,6 +315,38 @@
   transform: rotate(180deg);
   color: #0C1618;
 }
+#root .logout_container {
+  position: absolute;
+  left: 0;
+  bottom: 1rem;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 85%;
+}
+#root .logout_container button {
+  width: 100%;
+  height: 3rem;
+  padding-inline: 1rem;
+  border: none;
+  background-color: transparent;
+  border: 2px solid #FAF4D3;
+  border-radius: 22px;
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  color: #FAF4D3;
+  cursor: pointer;
+  transition: 0.2s ease-out;
+}
+#root .logout_container button i {
+  font-size: 1.25rem;
+}
+#root .logout_container button:hover {
+  background-color: #FAF4D3;
+  color: #0C1618;
+}
 
 .todos_container {
   display: flex;
@@ -469,9 +502,83 @@
 }
 .todos_container .tasks_container .completed .complete_btn i {
   opacity: 1;
-}/*# sourceMappingURL=styles.css.map */
+}
 
-.login{
+.login_screen {
   width: 100%;
-  background-color: #004643;
+  height: 100vh;
+  background-color: #007a74;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 30px;
+}
+.login_screen h1 {
+  color: #FAF4D3;
+  font-size: 36px;
+}
+.login_screen .login_container {
+  background-color: aliceblue;
+  width: 500px;
+  padding-block: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  border-radius: 12px;
+}
+.login_screen .login_container p {
+  display: flex;
+  width: 80%;
+  flex-direction: column;
+}
+.login_screen .login_container p label {
+  font-size: 14px;
+}
+.login_screen .login_container p input {
+  height: 34px;
+  border: 1px solid #0C1618;
+  border-radius: 4px;
+  margin-bottom: 12px;
+  padding-left: 5px;
+}
+.login_screen .login_container .alternate_mode {
+  display: flex;
+  margin-block: 5px;
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+}
+.login_screen .login_container .alternate_mode button {
+  border: none;
+  cursor: pointer;
+  border: 1px solid;
+  padding: 3px 8px;
+  border-radius: 20px;
+}
+.login_screen .login_container .or {
+  text-align: center;
+}
+.login_screen .login_container .main_btn {
+  background-color: black;
+  flex-grow: 1;
+  width: 80%;
+  border: none;
+  height: 45px;
+  border-radius: 24px;
+  margin-top: 15px;
+  font-size: 16px;
+  font-weight: 500;
+  color: #FAF4D3;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+}
+.login_screen .login_container .login_google {
+  background-color: transparent;
+  color: #0C1618;
+  border: 2px solid #0C1618;
 }

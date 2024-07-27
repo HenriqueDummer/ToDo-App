@@ -69,7 +69,7 @@ export default function Todo({ currentTodoId, todoList, setTodoList }) {
                       onClick={() => completeTask(task.id)}
                       className="complete_btn"
                     >
-                      <i class="bx bx-check"></i>
+                      <i className="bx bx-check"></i>
                     </button>
                     <h2>{task.taskName}</h2>
                   </div>

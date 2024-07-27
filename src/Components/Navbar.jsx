@@ -38,7 +38,7 @@ export default function Navbar({
           onClick={() => setNavActive((prev) => !prev)}
           className="nav_btn"
         >
-          <i class={`bx ${navActive ? "bxs-x-square" : "bx bx-menu"}`}></i>
+          <i className={`bx ${navActive ? "bxs-x-square" : "bx bx-menu"}`}></i>
         </button>
         <div className="profile">
           <div className="profile-img">
@@ -57,10 +57,11 @@ export default function Navbar({
         </div>
         <div className="controls">
           <h2>Your tasks</h2>
-          <div className="list_container">
+          <ul className="list_container">
             {todoList.map((todo) => {
               return (
                 <NavbarTodo
+                  key={todo.id}
                   todo={todo}
                   currentTodoId={currentTodoId}
                   setCurrentTodoId={setCurrentTodoId}
@@ -69,18 +70,18 @@ export default function Navbar({
                 />
               );
             })}
-          </div>
+          </ul>
           {todoList.length < 10 && (
             <div className="add_todo">
               <button onClick={() => addNewTodo()} className="add_todo_btn">
-                <i class="bx bx-plus"></i>
+                <i className="bx bx-plus"></i>
               </button>
             </div>
           )}
         </div>
         <div className="logout_container">
           <button onClick={handleSignOut}>
-            <i class="bx bx-log-out"></i>
+            <i className="bx bx-log-out"></i>
             Logout
           </button>
         </div>

@@ -21,7 +21,7 @@ function App() {
   return(
     <>
       {userIsAuthenticated ? 
-        <Main setUserIsAuthenticated={setUserIsAuthenticated} />
+        <Main setUserIsAuthenticated={setUserIsAuthenticated} userIsAuthenticated={userIsAuthenticated} />
         :
         <Login setUserIsAuthenticated={setUserIsAuthenticated} />
       }
