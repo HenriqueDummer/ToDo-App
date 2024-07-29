@@ -37,7 +37,7 @@
     position: absolute;
     min-width: 0;
     width: 80%;
-    min-height: 100%;
+    height: 100%;
     z-index: 999;
   }
 }
@@ -72,7 +72,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  justify-content: none;
+  justify-content: start;
+  padding-left: 1rem;
   position: relative;
   color: #FAF4D3;
 }
@@ -86,6 +87,7 @@
 @media (max-width: 1000px) {
   #root .navbar .profile h3 {
     font-size: 16px;
+    position: relative;
   }
   #root .navbar .profile p {
     font-size: 12px;
@@ -99,6 +101,15 @@
 #root .navbar .profile-infos {
   margin-left: 20px;
 }
+#root .navbar .profile-infos button {
+  position: absolute;
+  right: 1rem;
+  border: none;
+  background-color: transparent;
+  color: #FAF4D3;
+  font-size: 1.3rem;
+  cursor: pointer;
+}
 #root .navbar .profile:after {
   content: "";
   position: absolute;
@@ -110,8 +121,41 @@
   transform: translate(50%, -50%);
   background-color: #0C1618;
 }
+#root .navbar .change_profile p {
+  display: flex;
+  flex-direction: column;
+}
+#root .logout_container {
+  margin: auto;
+  margin-top: 2rem;
+  width: 60%;
+}
+#root .logout_container button {
+  width: 100%;
+  height: 2.5rem;
+  padding-inline: 1rem;
+  border: none;
+  background-color: transparent;
+  border: 2px solid #FAF4D3;
+  border-radius: 22px;
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  color: #FAF4D3;
+  cursor: pointer;
+  transition: 0.2s ease-out;
+}
+#root .logout_container button i {
+  font-size: 1.25rem;
+}
+#root .logout_container button:hover {
+  background-color: #FAF4D3;
+  color: #0C1618;
+}
 #root .controls {
-  margin-top: 130px;
+  margin-top: 5rem;
 }
 #root .controls h2 {
   font-weight: 500;
@@ -315,38 +359,6 @@
   transform: rotate(180deg);
   color: #0C1618;
 }
-#root .logout_container {
-  position: absolute;
-  left: 0;
-  bottom: 1rem;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 85%;
-}
-#root .logout_container button {
-  width: 100%;
-  height: 3rem;
-  padding-inline: 1rem;
-  border: none;
-  background-color: transparent;
-  border: 2px solid #FAF4D3;
-  border-radius: 22px;
-  font-size: 1rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  color: #FAF4D3;
-  cursor: pointer;
-  transition: 0.2s ease-out;
-}
-#root .logout_container button i {
-  font-size: 1.25rem;
-}
-#root .logout_container button:hover {
-  background-color: #FAF4D3;
-  color: #0C1618;
-}
 
 .todos_container {
   display: flex;
@@ -517,10 +529,12 @@
 .login_screen h1 {
   color: #FAF4D3;
   font-size: 36px;
+  text-align: center;
 }
 .login_screen .login_container {
   background-color: aliceblue;
-  width: 500px;
+  width: 80%;
+  max-width: 500px;
   padding-block: 20px;
   display: flex;
   justify-content: center;
@@ -556,6 +570,7 @@
   border: 1px solid;
   padding: 3px 8px;
   border-radius: 20px;
+  min-width: 100px;
 }
 .login_screen .login_container .or {
   text-align: center;

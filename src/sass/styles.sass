@@ -36,7 +36,7 @@
             position: absolute
             min-width: 0
             width: 80%
-            min-height: 100%
+            height: 100%
             z-index: 999
 
         .nav_btn
@@ -64,7 +64,8 @@
 
         .profile
             @include mixins.flex-center
-            justify-content: none
+            justify-content: start
+            padding-left: 1rem
             position: relative
             color: variables.$font-light
 
@@ -78,6 +79,7 @@
             @include mixins.mobile
                 h3
                     font-size: 16px
+                    position: relative
 
                 p
                     font-size: 12px
@@ -92,6 +94,15 @@
             &-infos
                 margin-left: 20px
 
+                button
+                    position: absolute
+                    right: 1rem
+                    border: none
+                    background-color: transparent
+                    color: variables.$bg   
+                    font-size: 1.3rem   
+                    cursor: pointer   
+
         .profile:after
             content: ""
             position: absolute
@@ -103,8 +114,42 @@
             transform: translate(50%, -50%)
             background-color: variables.$secondary-color
 
+        .change_profile 
+            p
+                display: flex
+                flex-direction: column
+
+    .logout_container
+        margin: auto
+        margin-top: 2rem
+        width: 60%
+
+        button
+            width: 100%
+            height: 2.5rem
+            padding-inline: 1rem
+            border: none
+            background-color: transparent
+            border: 2px solid variables.$bg
+            border-radius: 22px
+            font-size: 1rem
+            display: flex
+            align-items: center
+            justify-content: center
+            gap: 8px
+            color: variables.$font-light
+            cursor: pointer
+            transition: 0.2s ease-out
+
+            i
+                font-size: 1.25rem
+
+            &:hover
+                background-color: variables.$bg
+                color: variables.$font-dark
+
     .controls
-        margin-top: 130px
+        margin-top: 5rem
 
         h2
             font-weight: 500
@@ -294,37 +339,7 @@
                     transform: rotate(180deg)
                     color: variables.$font-dark
 
-    .logout_container
-        position: absolute
-        left: 0
-        bottom: 1rem
-        left: 50%
-        transform: translateX(-50%)
-        width: 85%
-
-        button
-            width: 100%
-            height: 3rem
-            padding-inline: 1rem
-            border: none
-            background-color: transparent
-            border: 2px solid variables.$bg
-            border-radius: 22px
-            font-size: 1rem
-            display: flex
-            align-items: center
-            justify-content: center
-            gap: 8px
-            color: variables.$font-light
-            cursor: pointer
-            transition: 0.2s ease-out
-
-            i
-                font-size: 1.25rem
-
-            &:hover
-                background-color: variables.$bg
-                color: variables.$font-dark
+   
 
 .todos_container
     @include mixins.flex-center
@@ -479,10 +494,12 @@
     h1
         color: variables.$bg
         font-size: 36px
+        text-align: center
 
     .login_container
         background-color: aliceblue
-        width: 500px
+        width: 80%
+        max-width: 500px
         padding-block: 20px
         display: flex
         justify-content: center
@@ -518,6 +535,7 @@
                 border: 1px solid
                 padding: 3px 8px
                 border-radius: 20px
+                min-width: 100px
 
         .or
             text-align: center

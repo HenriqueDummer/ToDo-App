@@ -1,7 +1,6 @@
 import { useState, useRef } from "react";
-import { auth } from "../config/firebase";
-import { signOut } from "firebase/auth";
 import NavbarTodo from "./NavbarTodo";
+import NavbarProfile from "./NavbarProfile";
 
 export default function Navbar({
   todoList,
@@ -11,7 +10,6 @@ export default function Navbar({
   setUserIsAuthenticated,
 }) {
   const [navActive, setNavActive] = useState(true);
-
 
   const addNewTodo = () => {
     const newTodo = {
@@ -23,13 +21,7 @@ export default function Navbar({
     setTodoList((prev) => [...prev, newTodo]);
   };
 
-  const handleSignOut = () => {
-    try {
-      signOut(auth);
-    } catch (err) {
-      console.log(err);
-    }
-  };
+  
 
   return (
     <>
@@ -40,21 +32,8 @@ export default function Navbar({
         >
           <i className={`bx ${navActive ? "bxs-x-square" : "bx bx-menu"}`}></i>
         </button>
-        <div className="profile">
-          <div className="profile-img">
-            <img
-              src={
-                auth.currentUser.photoURL ??
-                "https://img.freepik.com/free-icon/user_318-159711.jpg"
-              }
-              alt=""
-            />
-          </div>
-          <div className="profile-infos">
-            <p>Hello there</p>
-            <h3>Henrique Dummer</h3>
-          </div>
-        </div>
+        <NavbarProfile />
+        
         <div className="controls">
           <h2>Your tasks</h2>
           <ul className="list_container">
@@ -79,12 +58,7 @@ export default function Navbar({
             </div>
           )}
         </div>
-        <div className="logout_container">
-          <button onClick={handleSignOut}>
-            <i className="bx bx-log-out"></i>
-            Logout
-          </button>
-        </div>
+        
       </div>
     </>
   );
