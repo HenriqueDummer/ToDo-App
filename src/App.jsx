@@ -1,49 +1,33 @@
 import { useEffect, useState } from 'react'
-import Navbar from './Components/Navbar'
-import Todo from './Components/Todo'
+
+import Main from './Pages/Main'
+import Login from './Pages/Login'
+
+import { auth } from './config/firebase'
+import { onAuthStateChanged } from 'firebase/auth'
 
 function App() {
-
-  const [todoList, setTodoList] = useState([
-    {
-      todoId: 0,
-      todoName: "Personal",
-      todoTasks: []
-    },
-    {
-      todoId: 1,
-      todoName: "Work",
-      todoTasks: []
-    },
-    {
-      todoId: 2,
-      todoName: "College",
-      todoTasks: []
+  const [userIsAuthenticated, setUserIsAuthenticated] = useState(false)
+  
+  onAuthStateChanged(auth, (user) => {
+    if (user) {
+      console.log(user)
+      setUserIsAuthenticated(true);
+    } else {
+      setUserIsAuthenticated(false);
     }
-  ])
-
-  const[currentTodoId, setCurrentTodoId] = useState(0)
-
-  const todo = todoList.find(
-    ({todoId}) => todoId === currentTodoId
+  }
   )
 
-  return (
+  
+
+  return(
     <>
-      <Navbar 
-        todoList = {todoList}
-        currentTodo = {currentTodoId}
-        setCurrentTodo = {setCurrentTodoId}
-        setTodoList = {setTodoList}
-      />
-      {todo !== undefined && (
-        <Todo 
-          currentTodoId = {currentTodoId}
-          todoList = {todoList}
-          setTodoList = {setTodoList}
-          id = {todoList.todoId}
-        />
-      )}     
+      {userIsAuthenticated ? 
+        <Main setUserIsAuthenticated={setUserIsAuthenticated} userIsAuthenticated={userIsAuthenticated} />
+        :
+        <Login setUserIsAuthenticated={setUserIsAuthenticated} />
+      }
     </>
   )
 }

@@ -8,13 +8,13 @@
     box-sizing: border-box
     font-family: 'Poppins', sans-serif
 
-#root 
+#root
     width: 100%
     height: 100vh
     display: flex
     background-color: variables.$bg
     position: relative
-    
+
     @include mixins.mobile
         height: auto
 
@@ -29,15 +29,15 @@
         border-bottom-right-radius: 20px
         color: variables.$font-dark
         transition: 0.4s ease-out all
+        position: relative
 
         @include mixins.mobile
             padding: 20px 10px
             position: absolute
             min-width: 0
             width: 80%
-            min-height: 100%
+            height: 100%
             z-index: 999
-            
 
         .nav_btn
             position: absolute
@@ -45,8 +45,8 @@
             left: 100%
             width: 60px
             height: 70px
-            border-top-right-radius: 20px 
-            border-bottom-right-radius: 20px 
+            border-top-right-radius: 20px
+            border-bottom-right-radius: 20px
             z-index: 99999
             @include mixins.flex-center
             border: none
@@ -57,14 +57,15 @@
                 font-size: 35px
                 color: variables.$bg
 
-            @include mixins.mobile 
+            @include mixins.mobile
                 display: inline
                 position: absolute
                 right: 0%
 
-        .profile 
+        .profile
             @include mixins.flex-center
-            justify-content: none
+            justify-content: start
+            padding-left: 1rem
             position: relative
             color: variables.$font-light
 
@@ -78,32 +79,77 @@
             @include mixins.mobile
                 h3
                     font-size: 16px
+                    position: relative
 
                 p
                     font-size: 12px
 
-            &-img 
+            &-img
 
                 img
                     width: 100px
-                    height: 100px 
+                    height: 100px
+                    border-radius: 50%
 
             &-infos
                 margin-left: 20px
+
+                button
+                    position: absolute
+                    right: 1rem
+                    border: none
+                    background-color: transparent
+                    color: variables.$bg   
+                    font-size: 1.3rem   
+                    cursor: pointer   
 
         .profile:after
             content: ""
             position: absolute
             width: 70%
             height: 4px
-            bottom: -20px 
-            border-radius: 2px 
+            bottom: -20px
+            border-radius: 2px
             right: 50%
             transform: translate(50%, -50%)
-            background-color: variables.$secondary-color   
-    
+            background-color: variables.$secondary-color
+
+        .change_profile 
+            p
+                display: flex
+                flex-direction: column
+
+    .logout_container
+        margin: auto
+        margin-top: 2rem
+        width: 60%
+
+        button
+            width: 100%
+            height: 2.5rem
+            padding-inline: 1rem
+            border: none
+            background-color: transparent
+            border: 2px solid variables.$bg
+            border-radius: 22px
+            font-size: 1rem
+            display: flex
+            align-items: center
+            justify-content: center
+            gap: 8px
+            color: variables.$font-light
+            cursor: pointer
+            transition: 0.2s ease-out
+
+            i
+                font-size: 1.25rem
+
+            &:hover
+                background-color: variables.$bg
+                color: variables.$font-dark
+
     .controls
-        margin-top: 130px
+        margin-top: 5rem
 
         h2
             font-weight: 500
@@ -121,26 +167,25 @@
                 justify-content: space-between
                 margin-bottom: 5px
                 background-color: transparent
-                min-height: 40px 
+                min-height: 40px
                 word-break: break-all
                 border: none
                 border-radius: 8px
-                transition: 0.1s ease all                  
+                transition: 0.1s ease all
 
                 &:hover
                     background-color: rgba(0,0,0, 0.1)
                     cursor: pointer
 
-                
                 .todo_name
                     @include mixins.flex-center
                     justify-content: none
                     min-width: 0
 
                     i
-                        font-size: 14px 
+                        font-size: 14px
                         margin-left: 30px
-                        pointer-events: none 
+                        pointer-events: none
                         color: variables.$secondary-color
                         transition: 0.1s ease-in-out all
 
@@ -153,7 +198,7 @@
                         height: 32px
                         width: auto
                         background-color: transparent
-                        border: 2px solid variables.$secondary-color 
+                        border: 2px solid variables.$secondary-color
                         border-radius: 4px
                         padding: 2px 5px
                         color: variables.$bg
@@ -176,7 +221,7 @@
                         h3
                             font-size: 17px
                             font-weight: 400
-                            margin-left: 25px 
+                            margin-left: 25px
                             color: variables.$font-light
 
                             &::after
@@ -195,10 +240,10 @@
                 height: 30px
                 margin-right: 10px
                 border: none
-                background-color: transparent 
+                background-color: transparent
                 border-radius: 50%
-                display: none 
-                transition: 0.2s ease all 
+                display: none
+                transition: 0.2s ease all
 
                 &:hover
                     background-color: rgba(0,0,0, 0.2)
@@ -221,7 +266,7 @@
                         box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1)
                         padding: 0px 10px
 
-                        @include mixins.mobile 
+                        @include mixins.mobile
                             box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.3)
                             left: -80px
                             top: 10px
@@ -246,13 +291,13 @@
                             &:hover
                                 cursor: pointer
                                 background-color: rgba(0,0,0, 0.2)
-                            
+
                     .drop_active
-                            display: block
-                            z-index: 9
+                        display: block
+                        z-index: 9
             .active
                 background-color: rgba(0,0,0, 0.2)
-                
+
                 .todo_name
                     i
                         font-size: 17px
@@ -278,47 +323,49 @@
             height: 50px
             border-radius: 50%
             border: none
-            background-color: transparent 
+            background-color: transparent
             border: 2px solid variables.$bg
             transition: 0.3s ease all
 
             i
                 font-size: 30px
-                transition: 0.3s ease all 
-                color: variables.$bg 
+                transition: 0.3s ease all
+                color: variables.$bg
 
-            &:hover 
+            &:hover
                 cursor: pointer
                 background-color: variables.$bg
                 i
                     transform: rotate(180deg)
                     color: variables.$font-dark
 
-.todos_container 
+   
+
+.todos_container
     @include mixins.flex-center
     width: 100%
     flex-direction: column
     justify-content: flex-start
-    margin-top: 180px 
+    margin-top: 180px
     position: relative
 
     @include mixins.mobile
         min-height: 100%
         margin-top: 120px
         text-align: center
-    
+
     h1
         position: absolute
         left: 80px
         top: -100px
         color: variables.$font-dark
 
-        @include mixins.mobile   
+        @include mixins.mobile
             position: static
             left: 0
             top: 0
             margin-inline: 60px
-            
+
             word-break: break-all
 
     .add_task
@@ -329,17 +376,17 @@
         border-radius: 14px
         overflow: hidden
 
-        input 
+        input
             width: 100%
             height: 60px
-            border: none 
+            border: none
             border-top-left-radius: 14px
             border-bottom-left-radius: 14px
             padding-left: 30px
             font-size: 16px
-            background-color: rgba(0,0,0, 0.1)   
+            background-color: rgba(0,0,0, 0.1)
 
-        button 
+        button
             width: 100px
             border: none
             background-color: variables.$secondary-color
@@ -347,22 +394,22 @@
 
             &:hover
                 cursor: pointer
-    
+
     .tasks_container
         width: 100%
-        margin-top: 80px 
+        margin-top: 80px
         width: 75%
         height: 60vh
         overflow: auto
 
-        @include mixins.mobile 
+        @include mixins.mobile
             height: auto
             min-height: 100vh
             overflow: visible
 
         &::-webkit-scrollbar
             width: 8px
-        
+
         &::-webkit-scrollbar-thumb
             background-color: rgba(0,0,0, 0.5)
             border-radius: 10px
@@ -428,9 +475,90 @@
                     box-shadow: 0px 0px 5px #fd352f
         .completed
             border: 3px solid variables.$primary-color-light
-                
+
             .complete_btn
                 background-color: variables.$primary-color-light
 
                 i
                     opacity: 1
+.login_screen
+    width: 100%
+    height: 100vh
+    background-color: #007a74
+    display: flex
+    justify-content: center
+    align-items: center
+    flex-direction: column
+    gap: 30px
+
+    h1
+        color: variables.$bg
+        font-size: 36px
+        text-align: center
+
+    .login_container
+        background-color: aliceblue
+        width: 80%
+        max-width: 500px
+        padding-block: 20px
+        display: flex
+        justify-content: center
+        align-items: center
+        flex-direction: column
+        border-radius: 12px
+
+        p
+            display: flex
+            width: 80%
+            flex-direction: column
+
+            label
+                font-size: 14px
+
+            input
+                height: 34px
+                border: 1px solid variables.$secondary-color
+                border-radius: 4px
+                margin-bottom: 12px
+                padding-left: 5px
+
+        .alternate_mode
+            display: flex
+            margin-block: 5px
+            flex-direction: row
+            align-items: center
+            gap: 8px
+
+            button
+                border: none
+                cursor: pointer
+                border: 1px solid
+                padding: 3px 8px
+                border-radius: 20px
+                min-width: 100px
+
+        .or
+            text-align: center
+
+        .main_btn
+            background-color: black
+            flex-grow: 1
+            width: 80%
+            border: none
+            height: 45px
+            border-radius: 24px
+            margin-top: 15px
+            font-size: 16px
+            font-weight: 500
+            color: #FAF4D3
+            display: flex
+            justify-content: center
+            align-items: center
+            gap: 10px
+            cursor: pointer
+
+
+        .login_google
+            background-color: transparent
+            color: variables.$font-dark
+            border: 2px solid variables.$font-dark
