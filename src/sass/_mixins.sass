@@ -3,6 +3,10 @@
     align-items: center
     justify-content: center
 
-@mixin mobile 
+@mixin medium_device 
     @media(max-width: 1000px)
+        @content
+
+@mixin small_device 
+    @media(max-width: 500px)
         @content

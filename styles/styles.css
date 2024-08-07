@@ -75,21 +75,44 @@
   justify-content: start;
   padding-left: 1rem;
   position: relative;
+  gap: 15px;
   color: #FAF4D3;
 }
-#root .navbar .profile p {
-  font-size: 13px;
+#root .navbar .profile .profile_infos p {
+  font-size: 14px;
 }
-#root .navbar .profile h3 {
-  font-weight: 500px;
+#root .navbar .profile .profile_infos h3 {
   font-size: 22px;
 }
+#root .navbar .profile .profile_infos button {
+  width: 7rem;
+  height: 1.4rem;
+  border: none;
+  background-color: transparent;
+  border: 1px solid #FAF4D3;
+  border-radius: 4px;
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  color: #FAF4D3;
+  cursor: pointer;
+  transition: 0.2s ease-out;
+}
 @media (max-width: 1000px) {
-  #root .navbar .profile h3 {
+  #root .navbar .profile .profile_infos h3 {
     font-size: 16px;
-    position: relative;
   }
-  #root .navbar .profile p {
+  #root .navbar .profile .profile_infos p {
+    font-size: 12px;
+  }
+}
+@media (max-width: 500px) {
+  #root .navbar .profile .profile_infos h3 {
+    font-size: 14px;
+  }
+  #root .navbar .profile .profile_infos p {
     font-size: 12px;
   }
 }
@@ -97,6 +120,12 @@
   width: 100px;
   height: 100px;
   border-radius: 50%;
+}
+@media (max-width: 500px) {
+  #root .navbar .profile-img img {
+    width: 60px;
+    height: 60px;
+  }
 }
 #root .navbar .profile-infos {
   margin-left: 20px;
@@ -162,6 +191,11 @@
   font-size: 27px;
   color: #FAF4D3;
   margin-left: 15px;
+}
+@media (max-width: 1000px) {
+  #root .controls h2 {
+    font-size: 22px;
+  }
 }
 #root .controls .list_container {
   display: flex;
@@ -324,6 +358,11 @@
 #root .controls .list_container .active .name_container h3::after {
   width: 120%;
   max-width: 100%;
+}
+@media (max-width: 1000px) {
+  #root .controls .list_container .active .name_container {
+    font-size: 15px;
+  }
 }
 #root .controls .list_container .active .dropdown_btn {
   display: inline;

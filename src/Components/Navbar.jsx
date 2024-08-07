@@ -21,7 +21,6 @@ export default function Navbar({
     setTodoList((prev) => [...prev, newTodo]);
   };
 
-  
 
   return (
     <>

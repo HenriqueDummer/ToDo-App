@@ -11,15 +11,12 @@ function App() {
   
   onAuthStateChanged(auth, (user) => {
     if (user) {
-      console.log(user)
       setUserIsAuthenticated(true);
     } else {
       setUserIsAuthenticated(false);
     }
   }
   )
-
-  
 
   return(
     <>
