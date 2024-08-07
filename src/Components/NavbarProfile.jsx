@@ -23,15 +23,14 @@ const NavbarProfile = () => {
       usernameRef.current.value.trim() !== "" &&
       usernameRef.current.value.length < 18 &&
       imageRef.current.value.trim() !== ""
-    ){
-        updateProfile(auth.currentUser, {
-            displayName: usernameRef.current.value,
-            photoURL: imageRef.current.value
-          }).then(() => {
-            setIsChangingProfile(false);
-          })
+    ) {
+      updateProfile(auth.currentUser, {
+        displayName: usernameRef.current.value,
+        photoURL: imageRef.current.value,
+      }).then(() => {
+        setIsChangingProfile(false);
+      });
     }
-      
   }
 
   if (isChangingProfile) {
@@ -48,9 +47,7 @@ const NavbarProfile = () => {
         <button type="button" onClick={handleSave}>
           Save
         </button>
-        <button onClick={() => setIsChangingProfile(false)}>
-            Cancel
-        </button>
+        <button onClick={() => setIsChangingProfile(false)}>Cancel</button>
       </form>
     );
   }
@@ -67,14 +64,13 @@ const NavbarProfile = () => {
             alt=""
           />
         </div>
-        <div className="profile-infos">
+        <div className="profile_infos">
           <p>Hello there</p>
-          <h3>
-            {auth.currentUser.displayName ?? "Uknown "}
-            <button onClick={() => setIsChangingProfile(true)}>
-              <i className="bx bxs-edit"></i>
-            </button>
-          </h3>
+          <h3>{auth.currentUser.displayName ?? "Uknown "}</h3>
+          <button onClick={() => setIsChangingProfile(true)}>
+            <i className="bx bxs-edit"></i>
+            Edit profile
+          </button>
         </div>
       </div>
       <div className="logout_container">

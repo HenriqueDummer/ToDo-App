@@ -15,7 +15,7 @@
     background-color: variables.$bg
     position: relative
 
-    @include mixins.mobile
+    @include mixins.medium_device
         height: auto
 
     .hidden
@@ -30,8 +30,9 @@
         color: variables.$font-dark
         transition: 0.4s ease-out all
         position: relative
+        
 
-        @include mixins.mobile
+        @include mixins.medium_device
             padding: 20px 10px
             position: absolute
             min-width: 0
@@ -57,7 +58,7 @@
                 font-size: 35px
                 color: variables.$bg
 
-            @include mixins.mobile
+            @include mixins.medium_device
                 display: inline
                 position: absolute
                 right: 0%
@@ -67,29 +68,58 @@
             justify-content: start
             padding-left: 1rem
             position: relative
+            gap: 15px
             color: variables.$font-light
 
-            p
-                font-size: 13px
-
-            h3
-                font-weight: 500px
-                font-size: 22px
-
-            @include mixins.mobile
-                h3
-                    font-size: 16px
-                    position: relative
+            .profile_infos
 
                 p
-                    font-size: 12px
+                    font-size: 14px
 
+                h3
+
+                    font-size: 22px
+
+                button
+                    width: 7rem
+                    height: 1.4rem
+                    border: none
+                    background-color: transparent
+                    border: 1px solid variables.$bg
+                    border-radius: 4px
+                    font-size: 12px
+                    display: flex
+                    align-items: center
+                    justify-content: center
+                    gap: 8px
+                    color: variables.$font-light
+                    cursor: pointer
+                    transition: 0.2s ease-out
+
+                @include mixins.medium_device
+                    h3
+                        font-size: 16px
+
+                    p
+                        font-size: 12px
+
+                @include mixins.small_device
+                    h3
+                        font-size: 14px
+
+                    p
+                        font-size: 12px
             &-img
 
                 img
                     width: 100px
                     height: 100px
                     border-radius: 50%
+
+                @include mixins.small_device
+                    img
+                        width: 60px
+                        height: 60px
 
             &-infos
                 margin-left: 20px
@@ -99,9 +129,9 @@
                     right: 1rem
                     border: none
                     background-color: transparent
-                    color: variables.$bg   
-                    font-size: 1.3rem   
-                    cursor: pointer   
+                    color: variables.$bg
+                    font-size: 1.3rem
+                    cursor: pointer
 
         .profile:after
             content: ""
@@ -114,7 +144,7 @@
             transform: translate(50%, -50%)
             background-color: variables.$secondary-color
 
-        .change_profile 
+        .change_profile
             p
                 display: flex
                 flex-direction: column
@@ -156,6 +186,10 @@
             font-size: 27px
             color: variables.$font-light
             margin-left: 15px
+        
+        @include mixins.medium_device
+            h2
+                font-size: 22px
 
         .list_container
             display: flex
@@ -224,6 +258,7 @@
                             margin-left: 25px
                             color: variables.$font-light
 
+                            
                             &::after
                                 content: ""
                                 position: absolute
@@ -234,6 +269,9 @@
                                 border-radius: 6px
                                 background-color: #0C1618
                                 transition: 0.3s ease-out all
+
+                            
+
 
             .dropdown_btn
                 width: 30px
@@ -266,7 +304,7 @@
                         box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1)
                         padding: 0px 10px
 
-                        @include mixins.mobile
+                        @include mixins.medium_device
                             box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.3)
                             left: -80px
                             top: 10px
@@ -310,6 +348,9 @@
                             width: 120%
                             max-width: 100%
 
+                    @include mixins.medium_device
+                                font-size: 15px
+
                 .dropdown_btn
                     display: inline
 
@@ -339,8 +380,6 @@
                     transform: rotate(180deg)
                     color: variables.$font-dark
 
-   
-
 .todos_container
     @include mixins.flex-center
     width: 100%
@@ -349,7 +388,7 @@
     margin-top: 180px
     position: relative
 
-    @include mixins.mobile
+    @include mixins.medium_device
         min-height: 100%
         margin-top: 120px
         text-align: center
@@ -360,7 +399,7 @@
         top: -100px
         color: variables.$font-dark
 
-        @include mixins.mobile
+        @include mixins.medium_device
             position: static
             left: 0
             top: 0
@@ -402,7 +441,7 @@
         height: 60vh
         overflow: auto
 
-        @include mixins.mobile
+        @include mixins.medium_device
             height: auto
             min-height: 100vh
             overflow: visible
@@ -556,7 +595,6 @@
             align-items: center
             gap: 10px
             cursor: pointer
-
 
         .login_google
             background-color: transparent
