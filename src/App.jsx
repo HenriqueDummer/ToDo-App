@@ -1,32 +1,29 @@
-import { useEffect, useState } from 'react'
+import { useContext } from "react";
 
-import Main from './Pages/Main'
-import Login from './Pages/Login'
+import Main from "./Pages/Main";
+import Login from "./Pages/Login";
 
-import { auth } from './config/firebase'
-import { onAuthStateChanged } from 'firebase/auth'
+import TodosContextProvider from "./Context/todosContext";
+import UserContextProvider, { UserContext } from "./Context/userContext";
 
 function App() {
-  const [userIsAuthenticated, setUserIsAuthenticated] = useState(false)
-  
-  onAuthStateChanged(auth, (user) => {
-    if (user) {
-      setUserIsAuthenticated(true);
-    } else {
-      setUserIsAuthenticated(false);
-    }
-  }
-  )
-
-  return(
+  return (
     <>
-      {userIsAuthenticated ? 
-        <Main setUserIsAuthenticated={setUserIsAuthenticated} userIsAuthenticated={userIsAuthenticated} />
-        :
-        <Login setUserIsAuthenticated={setUserIsAuthenticated} />
-      }
+      <UserContextProvider>
+        <AuthWrapper />
+      </UserContextProvider>
     </>
-  )
+  );
 }
 
-export default App
+function AuthWrapper() {
+  const { userIsAuthenticated } = useContext(UserContext);
+
+  return (
+    <TodosContextProvider>
+      {userIsAuthenticated ? <Main /> : <Login />}
+    </TodosContextProvider>
+  );
+}
+
+export default App;
