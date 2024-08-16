@@ -1,27 +1,12 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useContext } from "react";
 import NavbarTodo from "./NavbarTodo";
 import NavbarProfile from "./NavbarProfile";
+import { TodosContext } from "../Context/todosContext";
 
-export default function Navbar({
-  todoList,
-  setCurrentTodoId,
-  currentTodoId,
-  setTodoList,
-  setUserIsAuthenticated,
-}) {
+export default function Navbar() {
+  const { todoList, addNewTodo } = useContext(TodosContext);
   const [navActive, setNavActive] = useState(true);
-
-  const addNewTodo = () => {
-    const newTodo = {
-      todoId: todoList[todoList.length - 1].todoId + 1,
-      todoName: "New todo",
-      todoTasks: [],
-    };
-
-    setTodoList((prev) => [...prev, newTodo]);
-  };
-
-
+  console.log(todoList)
   return (
     <>
       <div className={`navbar ${navActive ? "" : "hidden"}`}>
@@ -31,8 +16,9 @@ export default function Navbar({
         >
           <i className={`bx ${navActive ? "bxs-x-square" : "bx bx-menu"}`}></i>
         </button>
+
         <NavbarProfile />
-        
+
         <div className="controls">
           <h2>Your tasks</h2>
           <ul className="list_container">
@@ -41,10 +27,6 @@ export default function Navbar({
                 <NavbarTodo
                   key={todo.id}
                   todo={todo}
-                  currentTodoId={currentTodoId}
-                  setCurrentTodoId={setCurrentTodoId}
-                  todoList={todoList}
-                  setTodoList={setTodoList}
                 />
               );
             })}
@@ -57,7 +39,6 @@ export default function Navbar({
             </div>
           )}
         </div>
-        
       </div>
     </>
   );
