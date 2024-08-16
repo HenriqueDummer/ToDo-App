@@ -9,7 +9,6 @@ import {
 } from "firebase/auth";
 
 import { db } from "../config/firebase";
-import LoginComponent from "../Components/LoginComponent";
 import { addDoc, collection, doc, setDoc } from "firebase/firestore";
 
 const initialData = [

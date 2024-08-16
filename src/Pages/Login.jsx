@@ -1,8 +1,12 @@
-import React, { useRef, useState } from "react";
+import React, { useContext, useRef, useState } from "react";
 import { signUp, logIn, signInWithGoogle } from "../config/logInFunctions";
+import { UserContext } from "../Context/UserContext";
 
-const Login = ({ setUserIsAuthenticated }) => {
+const Login = () => {
+  const {userIsAuthenticated} = useContext(UserContext)
   const [isLogin, setIsLogin] = useState(true);
+  console.log(userIsAuthenticated)
+
   const emailRef = useRef();
   const passwordRef = useRef();
   const confirmPasswordRef = useRef();
