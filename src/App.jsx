@@ -4,7 +4,7 @@ import Main from "./Pages/Main";
 import Login from "./Pages/Login";
 
 import TodosContextProvider from "./Context/todosContext";
-import UserContextProvider, { UserContext } from "./Context/UserContext";
+import UserContextProvider, { UserContext } from "./Context/userContext";
 
 function App() {
   return (
