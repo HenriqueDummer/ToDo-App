@@ -3,11 +3,13 @@ import NavbarTodo from "./NavbarTodo";
 import NavbarProfile from "./NavbarProfile";
 import { TodosContext } from "../Context/todosContext";
 
+import TagModal from "./TagModal";
+
 export default function Navbar() {
-  const {tags, currentTag} = useContext(TodosContext)
+  const { tags, currentTag } = useContext(TodosContext);
   const [navActive, setNavActive] = useState(true);
 
-  console.log(tags)
+  function addNewTag() {}
   return (
     <>
       <div className={`navbar ${navActive ? "" : "hidden"}`}>
@@ -21,24 +23,21 @@ export default function Navbar() {
         <NavbarProfile />
 
         <div className="controls">
-          <h2>Your tasks</h2>
+          <h2 className="text-xl">Your tasks</h2>
           <ul className="list_container">
-            {tags.map((todo) => {
-              return (
-                <NavbarTodo
-                  key={todo.id}
-                  todo={todo}
-                />
-              );
+            {tags.map((tag) => {
+              return <NavbarTodo key={tag.id} tag={tag} />;
             })}
           </ul>
-          {tags.length < 10 && (
-            <div className="add_todo">
-              <button onClick={() => addNewTodo()} className="add_todo_btn">
-                <i className="bx bx-plus"></i>
-              </button>
-            </div>
-          )}
+          <div className="add_todo">
+            {tags.length < 10 && (
+              <TagModal>
+                <button className="add_todo_btn">
+                  <i className="bx bx-plus"></i>
+                </button>
+              </TagModal>
+            )}
+          </div>
         </div>
       </div>
     </>

@@ -1,6 +1,7 @@
 import { createContext, useEffect, useState } from "react";
 import { auth, db } from "../config/firebase";
 import {
+  addDoc,
   collection,
   onSnapshot,
   query,
@@ -57,7 +58,6 @@ const TodosContextProvider = ({ children }) => {
             ...doc.data(),
           }));
           setTags(tagsList);
-          setCurrentTag(tagsList[0].tag)
           setIsLoading(false); // Set loading to false when data is fetched
         });
 
@@ -75,11 +75,20 @@ const TodosContextProvider = ({ children }) => {
     console.log(currentTag)
   }, [currentTag, user]);
 
+  const addNewTag = async (tagName) => {
+    try {
+      await addDoc(collection(db, "tags"),  {name: tagName, userId: user.uid})
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
   const todosContextValues = {
     todos,
-    setCurrentTag,
-    currentTag,
     tags,
+    currentTag,
+    setCurrentTag,
+    addNewTag,
     isLoading, // Include loading state in context
   };
 
