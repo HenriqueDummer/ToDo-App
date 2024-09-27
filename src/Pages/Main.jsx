@@ -11,9 +11,7 @@ const Main = () => {
  
   return (
     <>
-      {tags && <Navbar />}
-
-      {todos && <Todo />}
+  
     </>
   );
 };

@@ -12,8 +12,8 @@ const SignUp = () => {
     password: "",
     confirmPassword: "",
   });
-  const { setInitialData } = useContext(TodosContext);
-  const { createUser, signInWithGoogle, error, setError, loading } =
+
+  const { createUser, signInWithGoogle, loading } =
     useAuthentication();
 
   async function handleSubmit(e) {
@@ -23,15 +23,11 @@ const SignUp = () => {
       return;
     }
     
-    await createUser(formData);
+    const {error} = await createUser(formData);
 
     if (error) {
       toast.error(error)
-      return;
     }
-
-    await setInitialData();
-    navigate("/");
   }
 
 

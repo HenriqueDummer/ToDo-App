@@ -56,11 +56,12 @@ import {
         } else {
           systemErrorMessage = "Something went wrong, please try again later.";
         }
-  
-        setError(systemErrorMessage);
+
+        return {error: systemErrorMessage}
+      } finally{
+        setLoading(false);
       }
   
-      setLoading(false);
     };
   
     const logout = () => {
@@ -86,16 +87,17 @@ import {
   
         if (error.message.includes("user-not-found")) {
           systemErrorMessage = "User not found.";
-        } else if (error.message.includes("wrong-password")) {
-          systemErrorMessage = "Password incorrect.";
+        } else if (error.message.includes("invalid-credential")) {
+          systemErrorMessage = "Email or password incorrect.";
         } else {
           systemErrorMessage = "Something went wrong, please try again later.";
         }
   
-        setError(systemErrorMessage);
+        return {error: systemErrorMessage}
+      } finally{
+        setLoading(false);
       }
   
-      setLoading(false);
     };
 
    const signInWithGoogle = async() => {

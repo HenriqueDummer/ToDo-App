@@ -3,8 +3,12 @@ import { auth, db } from "../config/firebase";
 import {
   addDoc,
   collection,
+  deleteDoc,
+  doc,
   onSnapshot,
   query,
+  setDoc,
+  updateDoc,
   where,
 } from "firebase/firestore";
 
@@ -12,14 +16,14 @@ export const TodosContext = createContext();
 
 const TodosContextProvider = ({ children }) => {
   const [todos, setTodos] = useState([]);
-  const [tags, setTags] = useState([])
+  const [tags, setTags] = useState([]);
+  const [error, setError] = useState(null);
   const [currentTag, setCurrentTag] = useState(); // Assuming tags are strings
   const [isLoading, setIsLoading] = useState(true);
 
   const user = auth.currentUser; // Get current user inside useEffect
-  
-  useEffect(() => {
 
+  useEffect(() => {
     const fetchTodosByTag = () => {
       if (user && currentTag) {
         const q = query(
@@ -36,7 +40,7 @@ const TodosContextProvider = ({ children }) => {
           setTodos(todoList);
           setIsLoading(false); // Set loading to false when data is fetched
         });
-        console.log(todos)
+        console.log(todos);
         // Cleanup listener on unmount
         return () => unsubscribeTodos();
       } else {
@@ -49,7 +53,7 @@ const TodosContextProvider = ({ children }) => {
       if (user) {
         const q = query(
           collection(db, "tags"),
-          where("userId", "==", user.uid),
+          where("userId", "==", user.uid)
         );
 
         const unsubscribeTags = onSnapshot(q, (querySnapshot) => {
@@ -70,18 +74,52 @@ const TodosContextProvider = ({ children }) => {
     };
 
     fetchTodosByTag();
-    fetchTags()
+    fetchTags();
 
-    console.log(currentTag)
+    console.log(currentTag);
   }, [currentTag, user]);
 
   const addNewTag = async (tagName) => {
     try {
-      await addDoc(collection(db, "tags"),  {name: tagName, userId: user.uid})
+      await addDoc(collection(db, "tags"), { name: tagName, userId: user.uid });
+    } catch (error) {
+      console.error(error);
+      return {error: "Could not add new collection"}
+    }
+  };
+
+  const addNewTodo = async (task) => {
+    try {
+      const newTodo = {
+        task,
+        userId: user.uid,
+        tag: currentTag,
+        completed: false,
+      };
+      await addDoc(collection(db, "todos"), newTodo);
+    } catch (error) {
+      console.error(error);
+      return {error: "Could not add new todo"}
+    }
+  };
+
+  const deleteTodo = async (todoId) => {
+    try {
+      await deleteDoc(doc(db, "todos", todoId))
     } catch (error) {
       console.error(error)
+      return {error: "Could not delete todo"}
     }
   }
+
+  const toggleTodoComplete = async (todoId, currentCompleted) => {
+    try {
+        await updateDoc(doc(db, "todos", todoId), {completed: !currentCompleted})
+    } catch (error) {
+      console.error(error);
+      return {error: "Could not check/uncheck todo"}
+    }
+  };
 
   const todosContextValues = {
     todos,
@@ -89,12 +127,18 @@ const TodosContextProvider = ({ children }) => {
     currentTag,
     setCurrentTag,
     addNewTag,
+    addNewTodo,
+    deleteTodo,
+    toggleTodoComplete,
     isLoading, // Include loading state in context
+    error,
+    setError,
   };
 
   return (
     <TodosContext.Provider value={todosContextValues}>
-      {isLoading ? <div>Loading...</div> : children} {/* Show loading indicator */}
+      {isLoading ? <div>Loading...</div> : children}{" "}
+      {/* Show loading indicator */}
     </TodosContext.Provider>
   );
 };

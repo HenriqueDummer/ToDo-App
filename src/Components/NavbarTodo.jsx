@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import { useState, useRef } from "react";
 
 import { TodosContext } from "../Context/todosContext";
+import { NavLink } from "react-router-dom";
 
 const NavbarTodo = ({ tag }) => {
   const { setCurrentTag, currentTag } = useContext(TodosContext);
@@ -14,9 +15,11 @@ const NavbarTodo = ({ tag }) => {
   const handleChangeTodo = () => {
     setCurrentTag(tag.name)
   };
-  console.log(currentTag)
+
+  
   return (
-    <button
+    <NavLink
+      to={`/collection/${tag.name}`}
       onClick={() => handleChangeTodo()}
       className={`list_container_todo ${
         tag.name === currentTag ? "active" : ""
@@ -28,7 +31,7 @@ const NavbarTodo = ({ tag }) => {
           <h3>{tag.name}</h3>
         </div>
       </div>
-    </button>
+    </NavLink>
   );
 };
 

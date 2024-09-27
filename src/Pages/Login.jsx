@@ -18,13 +18,13 @@ const Login = () => {
   
   async function handleSubmit(e) {
     e.preventDefault();
-    await login(formData);
+    const {error} = await login(formData);
 
-    if (error) {
-      return;
+    if(error){
+      toast.error(error)
     }
 
-    navigate("/");
+    
   }
 
   function handleChange(e) {

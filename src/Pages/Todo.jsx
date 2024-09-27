@@ -3,43 +3,40 @@ import { useRef, useContext } from "react";
 import TodoComponent from "../Components/TodoComponent";
 
 import { TodosContext } from "../Context/todosContext";
+import { useParams } from "react-router-dom";
 
 export default function Todo() {
-  const { todos, currentTag } = useContext(TodosContext);
-  const taskRef = useRef();
+  const todoRef = useRef();
+  const {name: currentTag} = useParams()
 
+  const { todos, addNewTodo } = useContext(TodosContext);
   console.log(todos)
-
   // const newTodoList = [...todoList];
 
-  // const addNewTask = (e, taskName) => {
-  //   e.preventDefault();
-  //   if (taskName.trim() !== "") {
-  //     const newTask = {
-  //       id:
-  //         currentTodo.todoTasks.length == 0
-  //           ? 1
-  //           : currentTodo.todoTasks[currentTodo.todoTasks.length - 1].id + 1,
-  //       taskName,
-  //       isCompleted: false,
-  //     };
+  const handleAddTodo = async(e) => {
+    e.preventDefault()
+    const task = todoRef.current.value
 
-  //     currentTodo.todoTasks.push(newTask);
+    if(task.trim() === ""){
+      return;
+    }
 
-  //     setTodoList(newTodoList);
-  //     taskRef.current.value = "";
-  //   }
-  // };
+    const {error} = await addNewTodo(task)
+
+    if(error){
+      toast.error(error)
+    }
+  }
 
   return (
     <>
       <div className="todos_container">
         <h1>{currentTag}</h1>
         <form
-          onSubmit={(e) => addNewTask(e, taskRef.current.value)}
+          onSubmit={handleAddTodo}
           className="add_task"
         >
-          <input type="text" placeholder="Add a new task" ref={taskRef} />
+          <input type="text" placeholder="Add a new task" ref={todoRef} />
           <button>
             <span>Add Task</span>
           </button>
