@@ -18,20 +18,20 @@ const NavbarTodo = ({ todo }) => {
     setIsChangingName(true);
   };
 
-  const saveNameChange = (id) => {
-    const updadetTodosList = [...todoList];
-    updadetTodosList[currentTodoId].todoName = nameInputRef.current.value;
-    setTodoList(updadetTodosList);
-    setIsChangingName(false);
-  };
+  // const saveNameChange = (id) => {
+  //   const updadetTodosList = [...todoList];
+  //   updadetTodosList[currentTodoId].todoName = nameInputRef.current.value;
+  //   setTodoList(updadetTodosList);
+  //   setIsChangingName(false);
+  // };
 
-  const handleChangeTodo = (id) => {
-    if (id != currentTodoId) {
-      setDropActive(false);
-      setIsChangingName(false);
-      changeTodo(id);
-    }
-  };
+  // const handleChangeTodo = (id) => {
+  //   if (id != currentTodoId) {
+  //     setDropActive(false);
+  //     setIsChangingName(false);
+  //     changeTodo(id);
+  //   }
+  // };
 
   return (
     <button
@@ -45,33 +45,14 @@ const NavbarTodo = ({ todo }) => {
         {isChangingName && todo.todoId === currentTodoId ? (
           <>
             <input required ref={nameInputRef} id="todoName" type="text" />
-            <button onClick={() => saveNameChange(todo.todoId)}>Save</button>
+            <button onClick={() => saveNameChange(todo.id)}>Save</button>
           </>
         ) : (
           <div className="name_container">
-            <h3>{todo.todoName}</h3>
+            <h3>{todo.tag}</h3>
           </div>
         )}
       </div>
-      <button
-        id={todo.todoId}
-        className="dropdown_btn"
-        onClick={handleOpenConfigs}
-      >
-        <i className="bx bx-dots-vertical-rounded bx-rotate-90"></i>
-        <div className="dropdown_menu_container">
-          <div className={`dropdown_menu ${drop_active ? `drop_active` : ``}`}>
-            <button className="" onClick={() => removeTodo(todo.todoId)}>
-              <p>Delete</p>
-              <i className="bx bxs-trash-alt"></i>
-            </button>
-            <button onClick={startChangingName} className="">
-              <p>Change Name</p>
-              <i className="bx bxs-edit"></i>
-            </button>
-          </div>
-        </div>
-      </button>
     </button>
   );
 };

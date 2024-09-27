@@ -1,106 +1,91 @@
-import { createContext, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 import { auth, db } from "../config/firebase";
-import { doc, getDoc, setDoc } from "firebase/firestore";
+import {
+  collection,
+  onSnapshot,
+  query,
+  where,
+} from "firebase/firestore";
 
 export const TodosContext = createContext();
 
 const TodosContextProvider = ({ children }) => {
-  const [todoList, setTodoList] = useState([]);
-  const [currentTodoId, setCurrentTodoId] = useState(0);
+  const [todos, setTodos] = useState([]);
+  const [tags, setTags] = useState([])
+  const [currentTag, setCurrentTag] = useState(); // Assuming tags are strings
   const [isLoading, setIsLoading] = useState(true);
 
-  const currentTodo = todoList?.find(({ todoId }) => todoId === currentTodoId);
+  const user = auth.currentUser; // Get current user inside useEffect
+  
+  useEffect(() => {
 
-  // ------------ Firebase Data ---------------------------
-  const loadUserData = async () => {
-    const docRef = doc(db, "users", auth.currentUser.uid);
-    const docSnap = await getDoc(docRef);
+    const fetchTodosByTag = () => {
+      if (user && currentTag) {
+        const q = query(
+          collection(db, "todos"),
+          where("userId", "==", user.uid),
+          where("tag", "==", currentTag)
+        );
 
-    if (docSnap.exists()) {
-      setTodoList(docSnap.data().todoList);
-    }
-
-    setIsLoading(false);
-  };
-
-  const setUserData = async () => {
-    if (!isLoading) {
-      async function setData() {
-        setDoc(doc(db, "users", auth.currentUser.uid), {
-          userName: auth.currentUser.uid,
-          todoList,
+        const unsubscribeTodos = onSnapshot(q, (querySnapshot) => {
+          const todoList = querySnapshot.docs.map((doc) => ({
+            id: doc.id,
+            ...doc.data(),
+          }));
+          setTodos(todoList);
+          setIsLoading(false); // Set loading to false when data is fetched
         });
+        console.log(todos)
+        // Cleanup listener on unmount
+        return () => unsubscribeTodos();
+      } else {
+        // If no user, set loading to false immediately
+        setIsLoading(false);
       }
-
-      setData();
-    }
-  };
-
-  // ------------------ Todos Functions --------------------
-
-  const addNewTodo = () => {
-    const newTodo = {
-      todoId: todoList[todoList.length - 1].todoId + 1,
-      todoName: "New todo",
-      todoTasks: [],
     };
 
-    setTodoList((prev) => [...prev, newTodo]);
-  };
+    const fetchTags = () => {
+      if (user) {
+        const q = query(
+          collection(db, "tags"),
+          where("userId", "==", user.uid),
+        );
 
-  const removeTodo = (id) => {
-    const updatedTodoList = todoList.filter((todo) => {
-      return todo.todoId !== id;
-    });
+        const unsubscribeTags = onSnapshot(q, (querySnapshot) => {
+          const tagsList = querySnapshot.docs.map((doc) => ({
+            id: doc.id,
+            ...doc.data(),
+          }));
+          setTags(tagsList);
+          setCurrentTag(tagsList[0].tag)
+          setIsLoading(false); // Set loading to false when data is fetched
+        });
 
-    setTodoList(updatedTodoList);
-    setCurrentTodoId(updatedTodoList[0].todoId);
-  };
+        // Cleanup listener on unmount
+        return () => unsubscribeTags();
+      } else {
+        // If no user, set loading to false immediately
+        setIsLoading(false);
+      }
+    };
 
-  const changeTodo = (id) => {
-    setCurrentTodoId(id);
-  };
+    fetchTodosByTag();
+    fetchTags()
 
-  // ------------------ Todos Tasks Functions --------------------
-  const newTodoList = [...todoList];
-
-  const completeTask = (id) => {
-    const taskIndex = currentTodo.todoTasks.findIndex((task) => task.id === id);
-
-    if (taskIndex !== -1) {
-      currentTodo.todoTasks[taskIndex].isCompleted ^= true;
-      setTodoList(newTodoList);
-    }
-  };
-
-  const removeTask = (id) => {
-    const updatedTodo = currentTodo.todoTasks.filter((task) => {
-      return task.id != id;
-    });
-
-    currentTodo.todoTasks = updatedTodo;
-    setTodoList(newTodoList);
-  };
-
-  // -----------------------------------------------------------
+    console.log(currentTag)
+  }, [currentTag, user]);
 
   const todosContextValues = {
-    todoList,
-    setTodoList,
-    currentTodoId,
-    currentTodo,
-    loadUserData,
-    setUserData,
-    addNewTodo,
-    removeTodo,
-    changeTodo,
-    completeTask,
-    removeTask,
+    todos,
+    setCurrentTag,
+    currentTag,
+    tags,
+    isLoading, // Include loading state in context
   };
 
   return (
     <TodosContext.Provider value={todosContextValues}>
-      {children}
+      {isLoading ? <div>Loading...</div> : children} {/* Show loading indicator */}
     </TodosContext.Provider>
   );
 };

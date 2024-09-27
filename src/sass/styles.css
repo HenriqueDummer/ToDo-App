@@ -636,3 +636,6 @@
   color: #0C1618;
   border: 2px solid #0C1618;
 }
+.login_screen .login_container .loading {
+  opacity: 70%;
+}/*# sourceMappingURL=styles.css.map */

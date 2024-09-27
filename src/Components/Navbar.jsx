@@ -4,9 +4,10 @@ import NavbarProfile from "./NavbarProfile";
 import { TodosContext } from "../Context/todosContext";
 
 export default function Navbar() {
-  const { todoList, addNewTodo } = useContext(TodosContext);
+  const {tags, currentTag} = useContext(TodosContext)
   const [navActive, setNavActive] = useState(true);
-  console.log(todoList)
+
+  console.log(tags)
   return (
     <>
       <div className={`navbar ${navActive ? "" : "hidden"}`}>
@@ -22,7 +23,7 @@ export default function Navbar() {
         <div className="controls">
           <h2>Your tasks</h2>
           <ul className="list_container">
-            {todoList.map((todo) => {
+            {tags.map((todo) => {
               return (
                 <NavbarTodo
                   key={todo.id}
@@ -31,7 +32,7 @@ export default function Navbar() {
               );
             })}
           </ul>
-          {todoList.length < 10 && (
+          {tags.length < 10 && (
             <div className="add_todo">
               <button onClick={() => addNewTodo()} className="add_todo_btn">
                 <i className="bx bx-plus"></i>

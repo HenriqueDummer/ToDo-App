@@ -1,88 +1,78 @@
-import React, { useRef, useState } from "react";
-import { signUp, logIn, signInWithGoogle } from "../config/logInFunctions";
+import { useState, useEffect } from "react";
+import { useAuthentication } from "../hooks/useAuthentication";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
-const Login = ({ setUserIsAuthenticated }) => {
-  const [isLogin, setIsLogin] = useState(true);
-  const emailRef = useRef();
-  const passwordRef = useRef();
-  const confirmPasswordRef = useRef();
+
+const Login = () => {
+  const navigate = useNavigate()
+  const [formData, setFormData] = useState({
+    email: "",
+    password: "",
+  });
+  const { login, signInWithGoogle, error, setError } = useAuthentication();
+
+  useEffect(() => {
+    toast.error(error);
+  }, [error]);
+  
+  async function handleSubmit(e) {
+    e.preventDefault();
+    await login(formData);
+
+    if (error) {
+      return;
+    }
+
+    navigate("/");
+  }
+
+  function handleChange(e) {
+    setFormData((prevState) => ({
+      ...prevState,
+      [e.target.id]: e.target.value,
+    }));
+  }
 
   return (
     <div className="login_screen">
-      <h1>{isLogin ? "Log in into your account!" : "Create a new account!"}</h1>
-      <form className="login_container">
+      <h1>Log in into your account!</h1>
+      <form onSubmit={handleSubmit} className="login_container">
         <p>
           <label htmlFor="email">Email</label>
-          <input ref={emailRef} type="email" name="email" id="email" required />
+          <input
+            type="email"
+            name="email"
+            id="email"
+            value={formData.email}
+            onChange={handleChange}
+            required
+          />
         </p>
         <p>
           <label htmlFor="password">Password</label>
           <input
-            ref={passwordRef}
             type="password"
             name="password"
             id="password"
+            value={formData.password}
+            onChange={handleChange}
             required
           />
         </p>
-        {!isLogin && (
-          <p>
-            <label htmlFor="password">Confirm password</label>
-            <input
-              ref={confirmPasswordRef}
-              type="password"
-              name="password"
-              id="password"
-              required
-            />
-          </p>
-        )}
 
-        {isLogin ? (
-          <p className="alternate_mode">
+        <p className="alternate_mode">
             Doesn't have an account?
             <button
               type="button"
-              onClick={() => setIsLogin(false)}
               className="alt_btn"
+              onClick={() => navigate("/signup")}
             >
               Sign up
             </button>
           </p>
-        ) : (
-          <p className="alternate_mode">
-            Already have an account?
-            <button
-              type="button"
-              onClick={() => setIsLogin(true)}
-              className="alt_btn"
-            >
-              Log in
-            </button>
-          </p>
-        )}
 
-        {isLogin ? (
-          <button
-            className="main_btn"
-            type="button"
-            onClick={() =>
-              logIn(emailRef.current.value, passwordRef.current.value)
-            }
-          >
-            Log in
-          </button>
-        ) : (
-          <button
-            className="main_btn"
-            type="button"
-            onClick={() =>
-              signUp(emailRef.current.value, passwordRef.current.value)
-            }
-          >
-            Sign up
-          </button>
-        )}
+        <button className="main_btn">Log in</button>
 
         <button
           type="button"

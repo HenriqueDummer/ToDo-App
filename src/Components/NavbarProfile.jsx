@@ -2,21 +2,15 @@ import React from "react";
 import { useState, useRef } from "react";
 
 import { auth } from "../config/firebase";
-import { getAuth, updateProfile } from "firebase/auth";
-import { signOut } from "firebase/auth";
+import { updateProfile } from "firebase/auth";
+import { useAuthentication } from "../hooks/useAuthentication";
 
 const NavbarProfile = () => {
   const [isChangingProfile, setIsChangingProfile] = useState(false);
   const usernameRef = useRef();
   const imageRef = useRef();
 
-  const handleSignOut = () => {
-    try {
-      signOut(auth);
-    } catch (err) {
-      console.log(err);
-    }
-  };
+  const {logout} = useAuthentication()
 
   function handleSave() {
     if (
@@ -74,7 +68,7 @@ const NavbarProfile = () => {
         </div>
       </div>
       <div className="logout_container">
-        <button onClick={handleSignOut}>
+        <button onClick={logout}>
           <i className="bx bx-log-out"></i>
           Logout
         </button>

@@ -1,27 +1,19 @@
 import React, { useContext } from "react";
-import { useState, useEffect } from "react";
 import Navbar from "../Components/Navbar";
-import Todo from "../Components/Todo";
 
 import { TodosContext } from "../Context/todosContext";
+import Todo from "./Todo";
 
 const Main = () => {
-  const { todoList, loadUserData, setUserData, currentTodo } =
-    useContext(TodosContext);
+  const { todos, tags } = useContext(TodosContext);
 
-  useEffect(() => {
-    loadUserData();
-  }, []);
-
-  useEffect(() => {
-    setUserData();
-  }, [todoList]);
-
+  console.log(tags)
+ 
   return (
     <>
-      {todoList && <Navbar />}
+      {tags && <Navbar />}
 
-      {currentTodo && <Todo />}
+      {todos && <Todo />}
     </>
   );
 };
