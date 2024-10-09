@@ -4,6 +4,7 @@ import { useState, useRef } from "react";
 import { auth } from "../config/firebase";
 import { updateProfile } from "firebase/auth";
 import { useAuthentication } from "../hooks/useAuthentication";
+import ProfileModal from "./ProfileModal";
 
 const NavbarProfile = () => {
   const [isChangingProfile, setIsChangingProfile] = useState(false);
@@ -19,7 +20,7 @@ const NavbarProfile = () => {
       imageRef.current.value.trim() !== ""
     ) {
       updateProfile(auth.currentUser, {
-        displayName: usernameRef.current.value,
+        username: usernameRef.current.value,
         photoURL: imageRef.current.value,
       }).then(() => {
         setIsChangingProfile(false);
@@ -61,10 +62,12 @@ const NavbarProfile = () => {
         <div className="profile_infos">
           <p>Hello there</p>
           <h3>{auth.currentUser.displayName ?? "Uknown "}</h3>
-          <button onClick={() => setIsChangingProfile(true)}>
-            <i className="bx bxs-edit"></i>
-            Edit profile
-          </button>
+          <ProfileModal>
+            <button>
+              <i className="bx bxs-edit"></i>
+              Edit profile
+            </button>
+          </ProfileModal>
         </div>
       </div>
       <div className="logout_container">

@@ -5,23 +5,24 @@ import {
   collection,
   deleteDoc,
   doc,
+  getDoc,
+  getDocs,
   onSnapshot,
   query,
-  setDoc,
   updateDoc,
   where,
 } from "firebase/firestore";
+import { updateProfile } from "firebase/auth";
 
 export const TodosContext = createContext();
 
 const TodosContextProvider = ({ children }) => {
   const [todos, setTodos] = useState([]);
   const [tags, setTags] = useState([]);
-  const [error, setError] = useState(null);
-  const [currentTag, setCurrentTag] = useState(); // Assuming tags are strings
+  const [currentTag, setCurrentTag] = useState();
   const [isLoading, setIsLoading] = useState(true);
 
-  const user = auth.currentUser; // Get current user inside useEffect
+  const user = auth.currentUser;
 
   useEffect(() => {
     const fetchTodosByTag = () => {
@@ -38,13 +39,11 @@ const TodosContextProvider = ({ children }) => {
             ...doc.data(),
           }));
           setTodos(todoList);
-          setIsLoading(false); // Set loading to false when data is fetched
+          setIsLoading(false);
         });
-        console.log(todos);
-        // Cleanup listener on unmount
+
         return () => unsubscribeTodos();
       } else {
-        // If no user, set loading to false immediately
         setIsLoading(false);
       }
     };
@@ -62,29 +61,44 @@ const TodosContextProvider = ({ children }) => {
             ...doc.data(),
           }));
           setTags(tagsList);
-          setIsLoading(false); // Set loading to false when data is fetched
+          setIsLoading(false);
         });
 
-        // Cleanup listener on unmount
         return () => unsubscribeTags();
       } else {
-        // If no user, set loading to false immediately
         setIsLoading(false);
       }
     };
 
     fetchTodosByTag();
     fetchTags();
-
-    console.log(currentTag);
   }, [currentTag, user]);
 
   const addNewTag = async (tagName) => {
+    setIsLoading(true);
     try {
+      const q = query(
+        collection(db, "tags"),
+        where("name", "==", tagName),
+        where("userId", "==", user.uid)
+      );
+
+      const existingDocument = await getDoc(q);
+
+      if (existingDocument) {
+        console.log("Tag name already exists");
+        return { success: false, error: "Collection name already exists" };
+      }
+
       await addDoc(collection(db, "tags"), { name: tagName, userId: user.uid });
+
+      return { success: true }; 
+
     } catch (error) {
       console.error(error);
-      return {error: "Could not add new collection"}
+      return { success: false, error: "Could not add new category" };
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -97,27 +111,32 @@ const TodosContextProvider = ({ children }) => {
         completed: false,
       };
       await addDoc(collection(db, "todos"), newTodo);
+      return { success: true }; 
     } catch (error) {
       console.error(error);
-      return {error: "Could not add new todo"}
+      return { success: false, error: "Could not add new todo" };
     }
   };
 
   const deleteTodo = async (todoId) => {
     try {
-      await deleteDoc(doc(db, "todos", todoId))
+      await deleteDoc(doc(db, "todos", todoId));
+      return { success: true }; 
     } catch (error) {
-      console.error(error)
-      return {error: "Could not delete todo"}
+      console.error(error);
+      return { success: false, error: "Could not delete todo" };
     }
-  }
+  };
 
   const toggleTodoComplete = async (todoId, currentCompleted) => {
     try {
-        await updateDoc(doc(db, "todos", todoId), {completed: !currentCompleted})
+      await updateDoc(doc(db, "todos", todoId), {
+        completed: !currentCompleted,
+      });
+      return { success: true }; 
     } catch (error) {
       console.error(error);
-      return {error: "Could not check/uncheck todo"}
+      return { success: false, error: "Could not check/uncheck todo" };
     }
   };
 
@@ -130,15 +149,12 @@ const TodosContextProvider = ({ children }) => {
     addNewTodo,
     deleteTodo,
     toggleTodoComplete,
-    isLoading, // Include loading state in context
-    error,
-    setError,
+    isLoading,
   };
 
   return (
     <TodosContext.Provider value={todosContextValues}>
-      {isLoading ? <div>Loading...</div> : children}{" "}
-      {/* Show loading indicator */}
+      {isLoading ? <div>Loading...</div> : children}
     </TodosContext.Provider>
   );
 };

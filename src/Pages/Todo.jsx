@@ -5,37 +5,34 @@ import TodoComponent from "../Components/TodoComponent";
 import { TodosContext } from "../Context/todosContext";
 import { useParams } from "react-router-dom";
 
+import { toast } from "react-toastify";
+
 export default function Todo() {
   const todoRef = useRef();
-  const {name: currentTag} = useParams()
+  const { name: currentTag } = useParams();
 
   const { todos, addNewTodo } = useContext(TodosContext);
-  console.log(todos)
-  // const newTodoList = [...todoList];
 
-  const handleAddTodo = async(e) => {
-    e.preventDefault()
-    const task = todoRef.current.value
+  const handleAddTodo = async (e) => {
+    e.preventDefault();
+    const task = todoRef.current.value;
+    todoRef.current.value = "";
 
-    if(task.trim() === ""){
+    if (task.trim() === "") {
+      toast.error("Field cannot be empty!")
       return;
-    }
+    };
 
-    const {error} = await addNewTodo(task)
+    const { error } = await addNewTodo(task);
 
-    if(error){
-      toast.error(error)
-    }
-  }
+    if (error) toast.warn(error);
+  };
 
   return (
     <>
       <div className="todos_container">
         <h1>{currentTag}</h1>
-        <form
-          onSubmit={handleAddTodo}
-          className="add_task"
-        >
+        <form onSubmit={handleAddTodo} className="add_task">
           <input type="text" placeholder="Add a new task" ref={todoRef} />
           <button>
             <span>Add Task</span>
